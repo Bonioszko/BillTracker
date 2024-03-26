@@ -4,6 +4,8 @@ import Cell from "./Cell";
 import TitleInvoices from "./TitleInvoices";
 import water from "../../public/icon (2).svg";
 import Popup from "./Popup";
+import PlusIcon from "../../public/plus.svg";
+import AddInvoicePopup from "./AddInvoicePopup";
 import Checked from "../../public/checkbox-checked-svgrepo-com.svg";
 import { set } from "mongoose";
 
@@ -26,6 +28,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     const [currentInvoices, setCurrentInvoices] = useState<Invoice[]>([]);
     const [popupMe, setPopupMe] = useState(false);
     const [popupTheir, setPopupTheir] = useState(false);
+    const [addInvoicePopup, setAddInvoicePopoup] = useState(false);
     useEffect(() => {
         const filteredInvoices = invoices.filter(
             (invoice) => invoice.category === currentCategory
@@ -81,90 +84,114 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                             <TitleInvoices title="Ja"></TitleInvoices>
                         </div>
                         <div className="w-full bg-white h-1"></div>
-                        {currentInvoices.length > 0 ? (
-                            currentInvoices.map((invoice, index) => (
-                                <div className="flex gap-2">
-                                    <Cell content={invoice.name} />
-                                    <Cell
-                                        content={invoice.date.toLocaleDateString(
-                                            "en-GB",
-                                            {
-                                                day: "2-digit",
-                                                month: "2-digit",
-                                                year: "numeric",
-                                            }
-                                        )}
-                                    />
-                                    <Cell
-                                        content={
-                                            <>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={
-                                                        invoice.paidByLocator
-                                                    }
-                                                    onChange={() =>
-                                                        setPopupTheir(true)
-                                                    }
-                                                    className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
-                                                />
-                                                {popupTheir && (
-                                                    <Popup
-                                                        onClose={() =>
-                                                            setPopupTheir(false)
-                                                        }
-                                                        togglePaidByLocator={() =>
-                                                            togglePaidByLocator(
-                                                                index,
-                                                                true
-                                                            )
-                                                        }
-                                                        currValue={
+                        <div className="flex flex-col gap-2">
+                            {currentInvoices.length > 0 ? (
+                                currentInvoices.map((invoice, index) => (
+                                    <div className="flex gap-2">
+                                        <Cell content={invoice.name} />
+                                        <Cell
+                                            content={invoice.date.toLocaleDateString(
+                                                "en-GB",
+                                                {
+                                                    day: "2-digit",
+                                                    month: "2-digit",
+                                                    year: "numeric",
+                                                }
+                                            )}
+                                        />
+                                        <Cell
+                                            content={
+                                                <>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={
                                                             invoice.paidByLocator
                                                         }
-                                                    ></Popup>
-                                                )}
-                                            </>
-                                        }
-                                    />
-                                    <Cell
-                                        content={
-                                            <>
-                                                <input
-                                                    type="checkbox"
-                                                    checked={invoice.paidByMe}
-                                                    onChange={() =>
-                                                        setPopupMe(true)
-                                                    }
-                                                    className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
-                                                />
-                                                {popupMe && (
-                                                    <Popup
-                                                        onClose={() =>
-                                                            setPopupMe(false)
+                                                        onChange={() =>
+                                                            setPopupTheir(true)
                                                         }
-                                                        togglePaidByLocator={() =>
-                                                            togglePaidByLocator(
-                                                                index,
-                                                                false
-                                                            )
-                                                        }
-                                                        currValue={
+                                                        className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
+                                                    />
+                                                    {popupTheir && (
+                                                        <Popup
+                                                            onClose={() =>
+                                                                setPopupTheir(
+                                                                    false
+                                                                )
+                                                            }
+                                                            togglePaidByLocator={() =>
+                                                                togglePaidByLocator(
+                                                                    index,
+                                                                    true
+                                                                )
+                                                            }
+                                                            currValue={
+                                                                invoice.paidByLocator
+                                                            }
+                                                        ></Popup>
+                                                    )}
+                                                </>
+                                            }
+                                        />
+                                        <Cell
+                                            content={
+                                                <>
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={
                                                             invoice.paidByMe
                                                         }
-                                                    ></Popup>
-                                                )}
-                                            </>
-                                        }
-                                    />
+                                                        onChange={() =>
+                                                            setPopupMe(true)
+                                                        }
+                                                        className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
+                                                    />
+                                                    {popupMe && (
+                                                        <Popup
+                                                            onClose={() =>
+                                                                setPopupMe(
+                                                                    false
+                                                                )
+                                                            }
+                                                            togglePaidByLocator={() =>
+                                                                togglePaidByLocator(
+                                                                    index,
+                                                                    false
+                                                                )
+                                                            }
+                                                            currValue={
+                                                                invoice.paidByMe
+                                                            }
+                                                        ></Popup>
+                                                    )}
+                                                </>
+                                            }
+                                        />
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="text-center text-2xl">
+                                    You do not have invoices for that category
                                 </div>
-                            ))
-                        ) : (
-                            <div className="text-center text-2xl">
-                                You do not have invoices for that category
-                            </div>
-                        )}
+                            )}
+                        </div>
+                        <div className="flex justify-center">
+                            <img
+                                src={PlusIcon}
+                                alt=""
+                                className="w-20 cursor-pointer"
+                                onClick={() => {
+                                    setAddInvoicePopoup(true);
+                                }}
+                            />
+                        </div>
                     </div>
+                    {addInvoicePopup && (
+                        <AddInvoicePopup
+                            onClose={() => setAddInvoicePopoup(false)}
+                            category={currentCategory}
+                        ></AddInvoicePopup>
+                    )}
                 </div>
             ) : (
                 <></>

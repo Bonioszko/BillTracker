@@ -34,6 +34,13 @@ function InvoicesPage() {
                     paidByLocator: false,
                 },
                 {
+                    category: "Czynsz",
+                    name: "Invoice 1",
+                    date: new Date(),
+                    paidByMe: true,
+                    paidByLocator: false,
+                },
+                {
                     category: "Woda",
                     name: "Invoice 2",
                     date: new Date(),
