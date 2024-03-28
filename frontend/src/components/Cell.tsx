@@ -4,7 +4,7 @@ interface CellProps {
 
 const Cell: React.FC<CellProps> = ({ content }) => {
     return (
-        <div className="w-60 bg-secondary-color text-center text-xl flex items-center justify-center p-1 rounded-lg">
+        <div className="w-60 bg-secondary-color text-center text-white text-xl flex items-center justify-center p-1 rounded-lg">
             {content}
         </div>
     );

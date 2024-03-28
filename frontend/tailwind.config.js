@@ -4,6 +4,7 @@ export default {
     theme: {
         extend: {
             colors: {
+                "background-color": "var(--background-color)",
                 "primary-color": "var(--primary-color)",
                 "secondary-color": "var(--secondary-color)",
                 "third-color": "var(--third-color)",

@@ -41,6 +41,20 @@ function InvoicesPage() {
                     paidByLocator: false,
                 },
                 {
+                    category: "Czynsz",
+                    name: "Invoice 2",
+                    date: new Date(),
+                    paidByMe: true,
+                    paidByLocator: false,
+                },
+                {
+                    category: "Czynsz",
+                    name: "Invoice 1",
+                    date: new Date(),
+                    paidByMe: true,
+                    paidByLocator: false,
+                },
+                {
                     category: "Woda",
                     name: "Invoice 2",
                     date: new Date(),
@@ -74,13 +88,13 @@ function InvoicesPage() {
     const [activeApartment, setActiveApartment] = useState(0);
 
     return (
-        <div className="w-full min-h-scree bg-primary-color pt-20 flex flex-col items-center gap-4">
+        <div className="w-full min-h-screen bg-background-color pt-20 flex flex-col items-center gap-4">
             <div className="w-10/12 h-20 bg-secondary-color flex justify-evenly items-center rounded-lg">
                 {apartments.map((apartment, index) => (
                     <div
                         className={`text-2xl   font-bold p-2 rounded-lg cursor-pointer ${
                             index === activeApartment
-                                ? "bg-third-color text-black"
+                                ? "bg-primary-color text-black"
                                 : "text-text-color"
                         }`}
                         onClick={() => setActiveApartment(index)}
@@ -90,7 +104,7 @@ function InvoicesPage() {
                     </div>
                 ))}
             </div>
-            <div className="h-5/6 bg-third-color w-10/12  rounded-lg">
+            <div className="h-5/6 bg-primary-color w-10/12  rounded-lg">
                 {apartments.map((apartment, index) => (
                     <CurrentApartment
                         key={index}

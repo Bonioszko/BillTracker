@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root{
+/* :root{
     --primary-color: #FBFBFE;
     --secondary-color: #818EFF;
     --third-color:  #B8BFFF;
@@ -10,7 +10,18 @@
     --fourth-color: #de3bff;
     --text-color:#f7f6ff;
     --test-color:#6C8EFF
-  }
+} */
+
+:root{
+  --background-color: #9A9DA5;
+  --primary-color: #ECECF2;
+  --secondary-color: #414A5E;
+  --third-color:  #EA7070;
+
+  --fourth-color: #de3bff;
+  --text-color:#F2F2F2;
+  --test-color:#6C8EFF
+}
 
   body {
     font-family: 'Poppins', sans-serif;
