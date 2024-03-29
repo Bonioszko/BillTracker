@@ -6,7 +6,7 @@ interface UserContextProviderProps {
 export interface User {
     name: string;
     email: string;
-    id: string;
+    _id: string;
 }
 
 export type UserContextType = {

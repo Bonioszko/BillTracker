@@ -1,8 +1,12 @@
-import { useState } from "react";
-
+import { FormEvent, useContext, useState } from "react";
+import { UserContext, UserContextType } from "../context/UserContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 interface AddInvoicePopupProps {
     onClose: () => void;
     category: string;
+    apartment_id: string;
+    refresh: () => void;
 }
 type Errors = {
     name?: string;
@@ -11,9 +15,17 @@ type Errors = {
 const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
     onClose,
     category,
+    apartment_id,
+    refresh,
 }) => {
     const [errors, setErrors] = useState<Errors>({});
-    const [formData, setformData] = useState({ name: "", date: "" });
+    const { user, setUser } = useContext(UserContext) as UserContextType;
+    const [formData, setFormData] = useState({
+        name: "",
+        date: "",
+        category: category,
+        apartment: apartment_id,
+    });
     const validateForm = () => {
         let isValid = true;
         const newErrors = {
@@ -31,6 +43,28 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
         setErrors(newErrors);
         return isValid;
     };
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        console.log(formData);
+        const { name, date, category, apartment } = formData;
+        const response = await fetch(`/api/invoice/${user?._id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name, date, category, apartment }),
+        });
+        if (response.ok) {
+            const data = await response.json();
+            onClose();
+            refresh();
+            toast.success("Dodano fakturę");
+        } else {
+            console.log("Error:", response.status, response.statusText);
+            toast.error("Nie dodano faktury");
+        }
+    };
     return (
         <div
             className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center transition-none"
@@ -38,10 +72,10 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
         >
             <div className="w-1/2 h-1/2 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20">
                 <h1 className="text-xl">
-                    Dodaj fakturę dla{" "}
-                    <span className="font-bold">{category}</span>
+                    Dodaj fakturę dla
+                    <span className="font-bold"> {category}</span>
                 </h1>
-                <form action="" className="flex flex-col gap-5">
+                <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div className="flex flex-col">
                         {" "}
                         <label htmlFor="fname">Nazwa faktury</label>
@@ -50,6 +84,13 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                             id="fname"
                             name="fname"
                             className="p-2 rounded-lg"
+                            value={formData.name}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    name: e.target.value,
+                                })
+                            }
                         />
                     </div>
                     <div className="flex flex-col">
@@ -60,6 +101,13 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                             id="date"
                             name="date"
                             className="p-2 rounded-lg"
+                            value={formData.date}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    date: e.target.value,
+                                })
+                            }
                         />
                     </div>
                     <div>
@@ -78,6 +126,7 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                     </div>
                 </form>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 };

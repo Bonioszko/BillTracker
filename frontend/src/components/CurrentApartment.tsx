@@ -11,6 +11,8 @@ import { set } from "mongoose";
 
 interface CurrentApartmentProps extends Apartment {
     active: boolean;
+    setRefresh: () => void;
+    refresh: boolean;
 }
 
 interface CurrentApartmentProps extends Apartment {
@@ -22,27 +24,25 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     description,
     locator,
     invoices,
+    owner,
+    _id,
     active,
+    setRefresh,
+    refresh,
 }) => {
     const [currentCategory, setCurrentCategory] = useState(Categories[0]);
-    const [CurrentApartment, setCurrentApartment] = useState({ name: name });
+
     const [currentInvoices, setCurrentInvoices] = useState<Invoice[]>([]);
     const [popupMe, setPopupMe] = useState({ visible: false, index: 0 });
     const [popupTheir, setPopupTheir] = useState({ visible: false, index: 0 });
     const [addInvoicePopup, setAddInvoicePopoup] = useState(false);
 
     useEffect(() => {
-        fetch("/api")
-            .then((response) => response.json())
-            .then((data) => console.log(data))
-            .catch((error) => console.error("Error:", error));
-    }, []);
-    useEffect(() => {
         const filteredInvoices = invoices.filter(
             (invoice) => invoice.category === currentCategory
         );
         setCurrentInvoices(filteredInvoices);
-    }, [currentCategory, invoices]);
+    }, [currentCategory, invoices, refresh]);
     const togglePaidByLocator = (index: number, paidByLocator: boolean) => {
         setCurrentInvoices((prevInvoices) => {
             // Create a new copy of the invoice you want to update
@@ -211,6 +211,8 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                         <AddInvoicePopup
                             onClose={() => setAddInvoicePopoup(false)}
                             category={currentCategory}
+                            apartment_id={_id}
+                            refresh={() => setRefresh()}
                         ></AddInvoicePopup>
                     )}
                 </div>

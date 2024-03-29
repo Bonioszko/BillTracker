@@ -29,10 +29,10 @@ function Login() {
             if (responseData.error) {
                 toast.success(responseData.error);
             } else {
-                toast.success("You are logged as: " + responseData.name);
                 setUser(responseData);
                 setTimeout(() => {
                     navigate("/profile");
+                    toast.success("You are logged as: " + responseData.name);
                 }, 1000);
             }
         } catch (err) {
