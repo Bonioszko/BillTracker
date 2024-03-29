@@ -1,12 +1,40 @@
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 function SignIn() {
     const [data, setData] = useState({
         name: "",
         email: "",
-
         password: "",
     });
-    const handleSubmit = async (e) => {};
+    const navigate = useNavigate();
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const { name, email, password } = data;
+
+        try {
+            const response = await fetch("/api/auth/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, email, password }),
+            });
+
+            const responseData = await response.json();
+
+            // Handle response data as needed
+            console.log(responseData);
+            if (responseData.error) {
+                toast.error(responseData.error);
+            } else {
+                toast.success(responseData.message);
+                navigate("/login");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
     return (
         <div>
             <div>
@@ -48,6 +76,7 @@ function SignIn() {
                     <button type="submit"> submit</button>
                 </form>
             </div>
+            <ToastContainer></ToastContainer>
         </div>
     );
 }

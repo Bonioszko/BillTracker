@@ -6,6 +6,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LandingPage from "./pages/LandingPage.tsx";
 import NotFoundPage from "./pages/NotFoundPage.tsx";
 import SignIn from "./pages/SignInPage.tsx";
+import Login from "./pages/LoginPage.tsx";
+import Profile from "./pages/Profile.tsx";
+import UserContextProvider from "./context/UserContext.tsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -20,10 +23,20 @@ const router = createBrowserRouter([
         path: "signin",
         element: <SignIn></SignIn>,
     },
+    {
+        path: "login",
+        element: <Login></Login>,
+    },
+    {
+        path: "profile",
+        element: <Profile></Profile>,
+    },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <RouterProvider router={router}></RouterProvider>
+        <UserContextProvider>
+            <RouterProvider router={router}></RouterProvider>
+        </UserContextProvider>
     </React.StrictMode>
 );
