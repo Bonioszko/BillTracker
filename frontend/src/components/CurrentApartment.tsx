@@ -86,17 +86,17 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                         ))}
                     </div>
                     <div className="flex flex-col gap-4">
-                        <div className="flex gap-2">
+                        <div className="flex gap-1">
                             <TitleInvoices title="Tytuł"></TitleInvoices>
                             <TitleInvoices title="Data"></TitleInvoices>
                             <TitleInvoices title=" Mi"></TitleInvoices>
                             <TitleInvoices title="Ja"></TitleInvoices>
                         </div>
                         <div className="w-full bg-white h-1"></div>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-1">
                             {currentInvoices.length > 0 ? (
                                 currentInvoices.map((invoice, index) => (
-                                    <div className="flex gap-2">
+                                    <div className="flex gap-1">
                                         <Cell content={invoice.name} />
 
                                         <Cell

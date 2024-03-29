@@ -4,6 +4,9 @@ import bcrypt from "bcryptjs";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
 
+interface UserPayload {
+    id: string;
+}
 const test = (req: Request, res: Response) => {
     res.json("test is working ");
 };
@@ -86,6 +89,38 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
         next(err);
     }
 };
+
+const getProfile = async (req: Request, res: Response) => {
+    const { token } = req.cookies;
+
+    if (token) {
+        try {
+            const user: UserPayload = jwt.verify(
+                token,
+                process.env.JWT_SECRET || "default_secret"
+            ) as UserPayload;
+            const userReturn = await User.findOne({ _id: user.id });
+
+            return res.json(userReturn);
+
+            return res.json({ mess: "ello" });
+        } catch (err) {
+            if (err instanceof jwt.TokenExpiredError) {
+                // The token has expired
+                res.status(401).json({
+                    error: "Session expired. Please log in again.",
+                });
+            } else {
+                // Some other error occurred
+                res.status(500).json({
+                    error: "An error occurred while verifying the token.",
+                });
+            }
+        }
+    } else {
+        res.json(null);
+    }
+};
 const logout = async (req: Request, res: Response) => {
     res.clearCookie("token");
     res.json({ logout: true });
@@ -95,4 +130,5 @@ module.exports = {
     signInUser,
     loginUser,
     logout,
+    getProfile,
 };

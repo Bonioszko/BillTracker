@@ -22,20 +22,17 @@ export default function UserContextProvider({
     children,
 }: UserContextProviderProps) {
     const [user, setUser] = useState<User | null>(null);
-    console.log(user);
     useEffect(() => {
         if (!user) {
-            console.log();
             fetch("/api/auth/profile", {
                 credentials: "include", // Include this line
             })
                 .then((response) => response.json())
                 .then((data) => {
-                    console.log(data);
                     setUser(data);
                 });
         }
-    }, []);
+    }, [user]);
     return (
         <UserContext.Provider value={{ user, setUser }}>
             {children}

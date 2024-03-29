@@ -3,7 +3,7 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContextType, UserContext } from "../context/UserContext";
-import {} from "react";
+import Layout from "../components/Layouts/Layout";
 
 function Login() {
     const navigate = useNavigate();
@@ -30,9 +30,9 @@ function Login() {
                 toast.success(responseData.error);
             } else {
                 toast.success("You are logged as: " + responseData.name);
+                setUser(responseData);
                 setTimeout(() => {
                     navigate("/profile");
-                    setUser(null);
                 }, 1000);
             }
         } catch (err) {
@@ -40,8 +40,7 @@ function Login() {
         }
     };
     return (
-        <div className="w-full h-screen bg-background-color  flex flex-col items-center justify-center gap-4">
-            <ToastContainer />
+        <Layout>
             <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-10 p-14 items-center rounded-lg">
                 {!user ? (
                     <>
@@ -101,7 +100,8 @@ function Login() {
                     <div>You are already logged in</div>
                 )}
             </div>
-        </div>
+            <ToastContainer />
+        </Layout>
     );
 }
 export default Login;

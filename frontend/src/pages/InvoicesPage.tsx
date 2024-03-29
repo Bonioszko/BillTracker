@@ -1,6 +1,7 @@
 import { useState } from "react";
 import CurrentApartment from "../components/CurrentApartment";
-
+import Navbar from "../components/Navbar";
+import Layout from "../components/Layouts/Layout";
 export const Categories = ["Czynsz", "Woda", "Prąd", "Spółdzielnia"];
 
 export type Category = (typeof Categories)[number];
@@ -88,7 +89,7 @@ function InvoicesPage() {
     const [activeApartment, setActiveApartment] = useState(0);
 
     return (
-        <div className="w-full min-h-screen bg-background-color pt-20 flex flex-col items-center gap-4">
+        <Layout>
             <div className="w-10/12 h-20 bg-secondary-color flex justify-evenly items-center rounded-lg">
                 {apartments.map((apartment, index) => (
                     <div
@@ -104,7 +105,7 @@ function InvoicesPage() {
                     </div>
                 ))}
             </div>
-            <div className="h-5/6 bg-primary-color w-10/12  rounded-lg">
+            <div className="h-5/6 bg-secondary-color w-10/12  rounded-lg">
                 {apartments.map((apartment, index) => (
                     <CurrentApartment
                         key={index}
@@ -116,7 +117,7 @@ function InvoicesPage() {
                     ></CurrentApartment>
                 ))}
             </div>
-        </div>
+        </Layout>
     );
 }
 
