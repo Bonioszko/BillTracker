@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import asyncHandler from "express-async-handler";
-import Aparment from "../models/apartment";
+import Apartment from "../models/apartment";
 import User from "../models/user";
 
 const createApartment = asyncHandler(async (req: Request, res: Response) => {
@@ -12,7 +12,7 @@ const createApartment = asyncHandler(async (req: Request, res: Response) => {
         res.status(400).json({ error: "user do not exists" });
         return;
     }
-    const apartment = new Aparment({
+    const apartment = new Apartment({
         name: name,
         description: description,
         owner: user,
@@ -30,9 +30,9 @@ const getUserApartments = asyncHandler(
             res.status(400).json({ error: "user do not exists" });
             return;
         }
-        const apartments = await Aparment.find({ owner: user });
+        const apartments = await Apartment.find({ owner: user });
         res.status(200).json({
-            aparments: apartments,
+            apartments: apartments,
         });
     }
 );
