@@ -41,26 +41,27 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
         const filteredInvoices = invoices.filter(
             (invoice) => invoice.category === currentCategory
         );
+
         setCurrentInvoices(filteredInvoices);
     }, [currentCategory, invoices, refresh]);
-    const togglePaidByLocator = (index: number, paidByLocator: boolean) => {
-        setCurrentInvoices((prevInvoices) => {
-            // Create a new copy of the invoice you want to update
-
-            const invoiceToUpdate = { ...prevInvoices[index] };
-            if (paidByLocator) {
-                invoiceToUpdate.paidByLocator = !invoiceToUpdate.paidByLocator;
-            } else {
-                invoiceToUpdate.paidByMe = !invoiceToUpdate.paidByMe;
-            }
-
-            const updatedInvoices = [
-                ...prevInvoices.slice(0, index),
-                invoiceToUpdate,
-                ...prevInvoices.slice(index + 1),
-            ];
-            return updatedInvoices;
+    const togglePaidByLocator = async (
+        index: number,
+        paidByLocator: boolean
+    ) => {
+        console.log(currentInvoices);
+        const id = currentInvoices[index]._id;
+        const response = await fetch(`/api/invoice/${id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ byLocator: paidByLocator }),
         });
+        if (response.ok) {
+            setRefresh();
+        } else {
+            console.error(`Error updating invoice: ${response.status}`);
+        }
     };
     return (
         <>
@@ -122,6 +123,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                                 visible: true,
                                                                 index: index,
                                                             });
+                                                            setRefresh();
                                                         }}
                                                         className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
                                                     />
@@ -156,12 +158,14 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                         checked={
                                                             invoice.paidByMe
                                                         }
-                                                        onChange={() =>
+                                                        onChange={() => {
                                                             setPopupMe({
                                                                 visible: true,
                                                                 index: index,
-                                                            })
-                                                        }
+                                                            });
+
+                                                            setRefresh();
+                                                        }}
                                                         className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
                                                     />
                                                     {popupMe.visible && (

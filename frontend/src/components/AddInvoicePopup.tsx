@@ -1,6 +1,7 @@
 import { FormEvent, useContext, useState } from "react";
 import { UserContext, UserContextType } from "../context/UserContext";
 import { ToastContainer, toast } from "react-toastify";
+import ErrorForm from "./ErrorForm";
 import "react-toastify/dist/ReactToastify.css";
 interface AddInvoicePopupProps {
     onClose: () => void;
@@ -46,23 +47,24 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        console.log(formData);
-        const { name, date, category, apartment } = formData;
-        const response = await fetch(`/api/invoice/${user?._id}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ name, date, category, apartment }),
-        });
-        if (response.ok) {
-            const data = await response.json();
-            onClose();
-            refresh();
-            toast.success("Dodano fakturę");
-        } else {
-            console.log("Error:", response.status, response.statusText);
-            toast.error("Nie dodano faktury");
+        if (validateForm()) {
+            const { name, date, category, apartment } = formData;
+            const response = await fetch(`/api/invoice/${user?._id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ name, date, category, apartment }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                onClose();
+                refresh();
+                toast.success("Dodano fakturę");
+            } else {
+                console.log("Error:", response.status, response.statusText);
+                toast.error("Nie dodano faktury");
+            }
         }
     };
     return (
@@ -78,7 +80,11 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div className="flex flex-col">
                         {" "}
-                        <label htmlFor="fname">Nazwa faktury</label>
+                        <div className="flex">
+                            {" "}
+                            <label htmlFor="fname">Nazwa faktury</label>
+                            <ErrorForm text="Podaj nazwe"></ErrorForm>
+                        </div>
                         <input
                             type="text"
                             id="fname"
@@ -95,7 +101,11 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                     </div>
                     <div className="flex flex-col">
                         {" "}
-                        <label htmlFor="date">Data faktury</label>
+                        <div className="flex">
+                            {" "}
+                            <label htmlFor="date">Data faktury</label>{" "}
+                            <ErrorForm text="Podaj date"></ErrorForm>
+                        </div>
                         <input
                             type="date"
                             id="date"

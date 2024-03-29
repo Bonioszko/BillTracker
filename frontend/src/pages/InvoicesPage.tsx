@@ -14,6 +14,7 @@ export type Invoice = {
     date: Date;
     paidByMe: boolean;
     paidByLocator: boolean;
+    _id: string;
 };
 export type Apartment = {
     name: string;
@@ -91,7 +92,7 @@ function InvoicesPage() {
                                 })),
                         })
                     );
-                    console.log(refresh);
+
                     setApartments(apartmentsWithInvoices);
                 }
             }
