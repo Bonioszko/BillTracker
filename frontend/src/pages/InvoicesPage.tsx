@@ -1,101 +1,133 @@
-import { useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import CurrentApartment from "../components/CurrentApartment";
-
+import Navbar from "../components/Navbar";
+import AddApartmentPopoup from "../components/AddApartmentPopup";
+import { UserContextType, UserContext } from "../context/UserContext";
+import PlusIcon from "../../public/plus.svg";
+import Layout from "../components/Layouts/Layout";
 export const Categories = ["Czynsz", "Woda", "Prąd", "Spółdzielnia"];
 
 export type Category = (typeof Categories)[number];
 
 export type Invoice = {
     category: Category;
+    apartment: string;
     name: string;
     date: Date;
     paidByMe: boolean;
     paidByLocator: boolean;
+    _id: string;
 };
 export type Apartment = {
     name: string;
+    _id: string;
+    owner: string;
     description: string;
     locator: string;
     invoices: Invoice[];
 };
 
 function InvoicesPage() {
-    const [apartments, setApartments] = useState<Apartment[]>([
-        {
-            name: "Apartment 1",
-            description: "This is a description for Apartment 1",
-            locator: "Locator 1",
-            invoices: [
-                {
-                    category: "Czynsz",
-                    name: "Invoice 1",
-                    date: new Date(),
-                    paidByMe: true,
-                    paidByLocator: false,
-                },
-                {
-                    category: "Woda",
-                    name: "Invoice 2",
-                    date: new Date(),
-                    paidByMe: false,
-                    paidByLocator: true,
-                },
-            ],
-        },
-        {
-            name: "Apartment 2",
-            description: "This is a description for Apartment 2",
-            locator: "Locator 2",
-            invoices: [
-                {
-                    category: "Woda",
-                    name: "Invoice 3",
-                    date: new Date(),
-                    paidByMe: true,
-                    paidByLocator: false,
-                },
-                {
-                    category: "Czynsz",
-                    name: "Invoice 4",
-                    date: new Date(),
-                    paidByMe: false,
-                    paidByLocator: true,
-                },
-            ],
-        },
-    ]);
+    const { user, setUser } = useContext(UserContext) as UserContextType;
+    const [apartments, setApartments] = useState<Apartment[]>();
     const [activeApartment, setActiveApartment] = useState(0);
+    const [refresh, setRefresh] = useState(false);
+    const [addApartmentPopupBool, setAddApartmentPopupBool] = useState(false);
+    const toggleRefresh = () => {
+        setRefresh(!refresh);
+    };
 
+    useEffect(() => {
+        const fetchData = async () => {
+            if (user) {
+                // Fetch invoices
+                const invoiceResponse = await fetch(`/api/invoice/${user._id}`);
+                const invoiceData = await invoiceResponse.json();
+                let invoices: Invoice[] = [];
+                if (invoiceResponse.ok) {
+                    invoices = invoiceData.invoices;
+                }
+
+                // Fetch apartments
+                const apartmentResponse = await fetch(
+                    `/api/apartment/${user._id}`
+                );
+                const apartmentData = await apartmentResponse.json();
+                let apartments: Apartment[] = [];
+                if (apartmentResponse.ok) {
+                    apartments = apartmentData.apartments;
+                    const apartmentsWithInvoices = apartments.map(
+                        (apartment) => ({
+                            ...apartment,
+                            invoices: invoices
+                                .filter(
+                                    (invoice) =>
+                                        invoice.apartment === apartment._id
+                                )
+                                .map((invoice) => ({
+                                    ...invoice,
+                                    date: new Date(invoice.date),
+                                })),
+                        })
+                    );
+
+                    setApartments(apartmentsWithInvoices);
+                }
+            }
+        };
+
+        fetchData();
+    }, [user, refresh]);
     return (
-        <div className="w-full min-h-scree bg-primary-color pt-20 flex flex-col items-center gap-4">
+        <Layout>
             <div className="w-10/12 h-20 bg-secondary-color flex justify-evenly items-center rounded-lg">
-                {apartments.map((apartment, index) => (
-                    <div
-                        className={`text-2xl   font-bold p-2 rounded-lg cursor-pointer ${
-                            index === activeApartment
-                                ? "bg-third-color text-black"
-                                : "text-text-color"
-                        }`}
-                        onClick={() => setActiveApartment(index)}
-                    >
-                        {" "}
-                        {apartment.name}
-                    </div>
-                ))}
+                {apartments &&
+                    apartments.map((apartment, index) => (
+                        <div
+                            className={`text-2xl   font-bold p-2 rounded-lg cursor-pointer ${
+                                index === activeApartment
+                                    ? "bg-primary-color text-black"
+                                    : "text-text-color"
+                            }`}
+                            onClick={() => setActiveApartment(index)}
+                        >
+                            {" "}
+                            {apartment.name}
+                        </div>
+                    ))}
+                <div className="flex justify-center">
+                    <img
+                        src={PlusIcon}
+                        alt=""
+                        className="w-20 cursor-pointer"
+                        onClick={() => setAddApartmentPopupBool(true)}
+                    />
+                </div>
             </div>
-            <div className="h-5/6 bg-third-color w-10/12  rounded-lg">
-                {apartments.map((apartment, index) => (
-                    <CurrentApartment
-                        key={index}
-                        name={apartment.name}
-                        description={apartment.description}
-                        locator={apartment.locator}
-                        invoices={apartment.invoices}
-                        active={index === activeApartment ? true : false}
-                    ></CurrentApartment>
-                ))}
+            <div className="h-5/6 bg-secondary-color w-10/12  rounded-lg">
+                {apartments &&
+                    apartments.map((apartment, index) => (
+                        <CurrentApartment
+                            key={index}
+                            name={apartment.name}
+                            _id={apartment._id}
+                            description={apartment.description}
+                            locator={apartment.locator}
+                            invoices={apartment.invoices}
+                            owner={apartment.owner}
+                            active={index === activeApartment ? true : false}
+                            setRefresh={toggleRefresh}
+                            refresh={refresh}
+                        ></CurrentApartment>
+                    ))}
             </div>
-        </div>
+            {addApartmentPopupBool && (
+                <AddApartmentPopoup
+                    onClose={() => setAddApartmentPopupBool(false)}
+                    refresh={() => toggleRefresh()}
+                ></AddApartmentPopoup>
+            )}
+        </Layout>
     );
 }
 
