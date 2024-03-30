@@ -1,7 +1,9 @@
 import { useEffect, useState, useContext } from "react";
 import CurrentApartment from "../components/CurrentApartment";
 import Navbar from "../components/Navbar";
+import AddApartmentPopoup from "../components/AddApartmentPopup";
 import { UserContextType, UserContext } from "../context/UserContext";
+import PlusIcon from "../../public/plus.svg";
 import Layout from "../components/Layouts/Layout";
 export const Categories = ["Czynsz", "Woda", "Prąd", "Spółdzielnia"];
 
@@ -30,35 +32,11 @@ function InvoicesPage() {
     const [apartments, setApartments] = useState<Apartment[]>();
     const [activeApartment, setActiveApartment] = useState(0);
     const [refresh, setRefresh] = useState(false);
+    const [addApartmentPopupBool, setAddApartmentPopupBool] = useState(false);
     const toggleRefresh = () => {
         setRefresh(!refresh);
     };
 
-    // useEffect(() => {
-    //     const fetchUserApartments = async () => {
-    //         const response = await fetch(`/api/apartment/${user?._id}`);
-    //         const data = await response.json();
-    //         if (response.ok) {
-    //             console.log(data.apartments);
-    //             setApartments(data.apartments);
-    //         }
-    //     };
-    //     if (user) {
-    //         fetchUserApartments();
-    //     }
-    // });
-    // useEffect(() => {
-    //     const fetchUserInvoices = async () => {
-    //         const response = await fetch(`/api/invoice/${user?._id}`);
-    //         const data = await response.json();
-    //         if (response.ok) {
-    //             console.log(data);
-    //         }
-    //     };
-    //     if (user) {
-    //         fetchUserInvoices();
-    //     }
-    // });
     useEffect(() => {
         const fetchData = async () => {
             if (user) {
@@ -117,6 +95,14 @@ function InvoicesPage() {
                             {apartment.name}
                         </div>
                     ))}
+                <div className="flex justify-center">
+                    <img
+                        src={PlusIcon}
+                        alt=""
+                        className="w-20 cursor-pointer"
+                        onClick={() => setAddApartmentPopupBool(true)}
+                    />
+                </div>
             </div>
             <div className="h-5/6 bg-secondary-color w-10/12  rounded-lg">
                 {apartments &&
@@ -135,6 +121,11 @@ function InvoicesPage() {
                         ></CurrentApartment>
                     ))}
             </div>
+            {addApartmentPopupBool && (
+                <AddApartmentPopoup
+                    onClose={() => setAddApartmentPopupBool(false)}
+                ></AddApartmentPopoup>
+            )}
         </Layout>
     );
 }

@@ -48,7 +48,6 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
         index: number,
         paidByLocator: boolean
     ) => {
-        console.log(currentInvoices);
         const id = currentInvoices[index]._id;
         const response = await fetch(`/api/invoice/${id}`, {
             method: "PATCH",
