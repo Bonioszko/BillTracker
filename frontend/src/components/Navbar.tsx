@@ -15,36 +15,39 @@ export default function Navbar() {
                         Payment Pal <img src={Icon} width="60px"></img>
                     </div>
                     {user ? (
-                        <Logout className="text-xl font-bold rounded-lg p-2"></Logout>
+                        <Logout className="text-xl font-bold rounded-lg p-2 hover:bg-secondary-color"></Logout>
                     ) : (
                         <Link
                             to="/login"
-                            className="text-xl font-bold rounded-lg p-2"
+                            className="text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
                         >
                             Login
                         </Link>
                     )}
                     <Link
                         to="/signin"
-                        className="text-xl font-bold rounded-lg p-2"
+                        className="text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
                     >
                         Signin
                     </Link>
                 </div>
                 <div className="flex gap-20">
                     {" "}
-                    <Link to="/" className="text-xl font-bold rounded-lg p-2">
+                    <Link
+                        to="/"
+                        className="text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
+                    >
                         Home
                     </Link>
                     <Link
                         to="/profile"
-                        className="text-xl font-bold rounded-lg p-2"
+                        className="text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
                     >
                         Profile
                     </Link>
                     <Link
                         to="/main"
-                        className="text-xl font-bold rounded-lg p-2"
+                        className="text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
                     >
                         Invoices
                     </Link>

@@ -58,9 +58,9 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
             });
             if (response.ok) {
                 const data = await response.json();
+                toast.success("Dodano fakturę");
                 onClose();
                 refresh();
-                toast.success("Dodano fakturę");
             } else {
                 console.log("Error:", response.status, response.statusText);
                 toast.error("Nie dodano faktury");

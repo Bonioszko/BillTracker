@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { Invoice, Apartment, Categories } from "../pages/InvoicesPage";
 import Cell from "./Cell";
 import TitleInvoices from "./TitleInvoices";
-import water from "../../public/icon (2).svg";
+import woda from "../../public/water.svg";
+import czynsz from "../../public/Bill.svg";
+import prąd from "../../public/electricity.svg";
+import spółdzielnia from "../../public/house.svg";
 import Popup from "./Popup";
 import PlusIcon from "../../public/plus.svg";
 import AddInvoicePopup from "./AddInvoicePopup";
@@ -18,7 +21,13 @@ interface CurrentApartmentProps extends Apartment {
 interface CurrentApartmentProps extends Apartment {
     active: boolean;
 }
-
+const categoryIcons = new Map([
+    ["Woda", woda],
+    ["Czynsz", czynsz],
+    ["Prąd", prąd],
+    ["Spółdzielnia", spółdzielnia],
+    // Add more categories here
+]);
 const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     name,
     description,
@@ -74,14 +83,21 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                         {Categories.map((category, index) => (
                             <div
                                 onClick={() => setCurrentCategory(category)}
-                                className={`font-bold p-1 rounded-lg cursor-pointer w-50 text-center text-2xl flex gap-2  ${
+                                className={`font-bold p-1 rounded-lg cursor-pointer w-50 text-center text-2xl flex gap-2   ${
                                     Categories[index] === currentCategory
                                         ? "bg-secondary-color text-text-color"
                                         : ""
                                 }`}
                             >
                                 {category}
-                                <img src={water} className="w-10"></img>
+                                <img
+                                    src={categoryIcons.get(category)}
+                                    className={`w-10 ${
+                                        Categories[index] === currentCategory
+                                            ? "rotate-12"
+                                            : ""
+                                    }`}
+                                ></img>
                             </div>
                         ))}
                     </div>

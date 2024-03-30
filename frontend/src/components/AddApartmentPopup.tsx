@@ -58,9 +58,11 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
             });
             if (response.ok) {
                 const data = await response.json();
-                onClose();
-                refresh();
                 toast.success("Dodano apartament");
+                setTimeout(() => {
+                    onClose();
+                    refresh();
+                }, 1000);
             } else {
                 console.log("Error:", response.status, response.statusText);
                 toast.error("Nie dodano faktury");

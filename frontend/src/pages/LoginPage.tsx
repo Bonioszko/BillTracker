@@ -4,39 +4,68 @@ import { useNavigate } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { UserContextType, UserContext } from "../context/UserContext";
 import Layout from "../components/Layouts/Layout";
-
+import ErrorForm from "../components/ErrorForm";
+type Errors = {
+    email?: string;
+    password?: string;
+};
 function Login() {
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext) as UserContextType;
-    const [data, setData] = useState({
+    const [errors, setErrors] = useState<Errors>({
         email: "",
         password: "",
     });
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+    });
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {
+            email: "",
+            password: "",
+        };
+        if (!formData.email) {
+            newErrors.email = "Podaj email";
+            isValid = false;
+        }
+        if (!formData.password) {
+            newErrors.password = "Podaj haslo";
+            isValid = false;
+        }
+        setErrors(newErrors);
+        return isValid;
+    };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const { email, password } = data;
-        try {
-            const response = await fetch("/api/auth/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                credentials: "include",
-                body: JSON.stringify({ email, password }),
-            });
-            const responseData = await response.json();
+        if (validateForm()) {
+            const { email, password } = formData;
+            try {
+                const response = await fetch("/api/auth/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    credentials: "include",
+                    body: JSON.stringify({ email, password }),
+                });
+                const responseData = await response.json();
 
-            if (responseData.error) {
-                toast.success(responseData.error);
-            } else {
-                setUser(responseData);
-                setTimeout(() => {
-                    navigate("/main");
-                    toast.success("You are logged as: " + responseData.name);
-                }, 1000);
+                if (responseData.error) {
+                    toast.success(responseData.error);
+                } else {
+                    setUser(responseData);
+                    setTimeout(() => {
+                        navigate("/main");
+                        toast.success(
+                            "You are logged as: " + responseData.name
+                        );
+                    }, 1000);
+                }
+            } catch (err) {
+                console.log(err);
             }
-        } catch (err) {
-            console.log(err);
         }
     };
     return (
@@ -47,49 +76,68 @@ function Login() {
                         <h2 className="text-2xl">Login</h2>
                         <form
                             onSubmit={handleSubmit}
-                            className="flex flex-col justify-between h-2/5 bg-background-color p-5 rounded-lg"
+                            className="flex flex-col justify-between h-2/5 w-1/2 gap-5 bg-background-color p-5 rounded-lg"
                         >
-                            <div className="flex flex-col gap-4">
-                                <label htmlFor="email" className="text-xl">
-                                    email
-                                </label>
+                            <div className="flex flex-col gap-1">
+                                <div className="flex justify-between items-center">
+                                    {" "}
+                                    <label htmlFor="email" className="text-xl">
+                                        email
+                                    </label>{" "}
+                                    {errors.email && (
+                                        <ErrorForm
+                                            text={errors.email}
+                                        ></ErrorForm>
+                                    )}
+                                </div>
+
                                 <input
                                     type="email"
                                     id="email"
                                     name="email"
                                     placeholder="enter email"
-                                    value={data.email}
+                                    value={formData.email}
                                     onChange={(e) =>
-                                        setData({
-                                            ...data,
+                                        setFormData({
+                                            ...formData,
                                             email: e.target.value,
                                         })
                                     }
-                                    className="p-2 rounded-xl"
+                                    className="p-2 rounded-xl border-2 border-black"
                                 />
                             </div>
-                            <div className="flex flex-col gap-4 ">
-                                <label htmlFor="password" className="text-xl">
-                                    password
-                                </label>
+                            <div className="flex flex-col gap-1 ">
+                                <div className="flex justify-between items-center">
+                                    <label
+                                        htmlFor="password"
+                                        className="text-xl"
+                                    >
+                                        password
+                                    </label>
+                                    {errors.password && (
+                                        <ErrorForm
+                                            text={errors.password}
+                                        ></ErrorForm>
+                                    )}
+                                </div>
                                 <input
                                     type="password"
                                     id="password"
                                     name="password"
                                     placeholder="enter password"
-                                    value={data.password}
+                                    value={formData.password}
                                     onChange={(e) =>
-                                        setData({
-                                            ...data,
+                                        setFormData({
+                                            ...formData,
                                             password: e.target.value,
                                         })
                                     }
-                                    className="p-2 rounded-xl"
+                                    className="p-2 rounded-xl border-2 border-black"
                                 />
                             </div>
                             <button
                                 type="submit"
-                                className="bg-background-color p-2 rounded-lg border-2 border-cyan-500"
+                                className="bg-background-color p-2 rounded-lg border-2 border-cyan-500 hover:bg-secondary-color transform hover:scale-105"
                             >
                                 {" "}
                                 submit

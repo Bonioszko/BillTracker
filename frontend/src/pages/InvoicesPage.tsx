@@ -80,22 +80,23 @@ function InvoicesPage() {
     }, [user, refresh]);
     return (
         <Layout>
-            <div className="w-10/12 h-20 bg-secondary-color flex justify-evenly items-center rounded-lg">
-                {apartments &&
-                    apartments.map((apartment, index) => (
-                        <div
-                            className={`text-2xl   font-bold p-2 rounded-lg cursor-pointer ${
-                                index === activeApartment
-                                    ? "bg-primary-color text-black"
-                                    : "text-text-color"
-                            }`}
-                            onClick={() => setActiveApartment(index)}
-                        >
-                            {" "}
-                            {apartment.name}
-                        </div>
-                    ))}
-                <div className="flex justify-center">
+            <div className="w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-evenly items-center rounded-lg">
+                <div className="overflow-x-auto flex items-center gap-2 px-10">
+                    {apartments &&
+                        apartments.map((apartment, index) => (
+                            <div
+                                className={`text-2xl font-bold p-2 rounded-lg cursor-pointer max-w-44 text-center ${
+                                    index === activeApartment
+                                        ? "bg-primary-color text-black"
+                                        : "text-text-color"
+                                }`}
+                                onClick={() => setActiveApartment(index)}
+                            >
+                                {apartment.name}
+                            </div>
+                        ))}
+                </div>
+                <div className="flex justify-center w-20">
                     <img
                         src={PlusIcon}
                         alt=""
