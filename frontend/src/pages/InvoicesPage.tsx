@@ -124,6 +124,7 @@ function InvoicesPage() {
             {addApartmentPopupBool && (
                 <AddApartmentPopoup
                     onClose={() => setAddApartmentPopupBool(false)}
+                    refresh={() => toggleRefresh()}
                 ></AddApartmentPopoup>
             )}
         </Layout>

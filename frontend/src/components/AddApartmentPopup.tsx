@@ -5,13 +5,17 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 interface AddApartmentPopoupProps {
     onClose: () => void;
+    refresh: () => void;
 }
 type Errors = {
     name?: string;
     description?: string;
     locator?: string;
 };
-const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({ onClose }) => {
+const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
+    onClose,
+    refresh,
+}) => {
     const { user, setUser } = useContext(UserContext) as UserContextType;
     const [errors, setErrors] = useState<Errors>({});
     const [formData, setFormData] = useState({
