@@ -1,7 +1,13 @@
-import { useState, useContext } from "react";
+import { useState, useContext, ClassAttributes } from "react";
 import { UserContextType, UserContext } from "../context/UserContext";
-export default function Logout() {
+
+interface LogoutProps {
+    className?: string;
+}
+
+export default function Logout({ className }: LogoutProps) {
     const { user, setUser } = useContext(UserContext) as UserContextType;
+
     const handleLogout = async () => {
         // Make a request to your server's logout endpoint
         const response = await fetch("/api/auth/logout", {
@@ -18,9 +24,10 @@ export default function Logout() {
             console.error("Logout failed");
         }
     };
+
     return (
         <>
-            <button onClick={handleLogout} className="p-2 roudned-lg">
+            <button onClick={handleLogout} className={` ${className}`}>
                 Logout
             </button>
         </>

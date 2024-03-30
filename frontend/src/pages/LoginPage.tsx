@@ -31,7 +31,7 @@ function Login() {
             } else {
                 setUser(responseData);
                 setTimeout(() => {
-                    navigate("/profile");
+                    navigate("/main");
                     toast.success("You are logged as: " + responseData.name);
                 }, 1000);
             }
