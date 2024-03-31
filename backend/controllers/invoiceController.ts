@@ -49,6 +49,21 @@ const createInvoice = asyncHandler(async (req: Request, res: Response) => {
         return;
     }
 });
+const deleteInvoice = asyncHandler(
+    async (req: Request, res: Response) => {
+        const { id } = req.params;
+
+       
+        const invoice = await Invoice.findByIdAndDelete(id);
+
+        if (!invoice) {
+            res.status(404);
+            throw new Error('Invoice not found');
+        }
+
+        res.status(204).json({ message: 'Invoice deleted successfully' });
+    }
+);
 const changePaymentInvoice = asyncHandler(
     async (req: Request, res: Response) => {
         const { id } = req.params;
@@ -91,4 +106,5 @@ module.exports = {
     getAllUserInvoices,
     createInvoice,
     changePaymentInvoice,
+    deleteInvoice,
 };
