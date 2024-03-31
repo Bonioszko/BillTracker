@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserContextType, UserContext } from "../context/UserContext";
 import Layout from "../components/Layouts/Layout";
 import ErrorForm from "../components/ErrorForm";
+import { t } from "i18next";
 type Errors = {
     email?: string;
     password?: string;
@@ -112,7 +113,7 @@ function Login() {
                                         htmlFor="password"
                                         className="text-xl"
                                     >
-                                        password
+                                        {t("password")}
                                     </label>
                                     {errors.password && (
                                         <ErrorForm
@@ -140,12 +141,12 @@ function Login() {
                                 className="bg-background-color p-2 rounded-lg border-2 border-cyan-500 hover:bg-secondary-color transform hover:scale-105"
                             >
                                 {" "}
-                                submit
+                                {t("submit")}
                             </button>
                         </form>
                     </>
                 ) : (
-                    <div>You are already logged in</div>
+                    <div>{t("logged_in")}</div>
                 )}
             </div>
             <ToastContainer />

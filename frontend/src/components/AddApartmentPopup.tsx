@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../context/UserContext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 interface AddApartmentPopoupProps {
     onClose: () => void;
     refresh: () => void;
@@ -16,6 +17,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
     onClose,
     refresh,
 }) => {
+    const { t } = useTranslation();
     const { user, setUser } = useContext(UserContext) as UserContextType;
     const [errors, setErrors] = useState<Errors>({});
     const [formData, setFormData] = useState({
@@ -82,7 +84,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                         {" "}
                         <div className="flex">
                             {" "}
-                            <label htmlFor="fname">Nazwa mieszkania</label>
+                            <label htmlFor="fname">{t("apartment_name")}</label>
                             {errors.name && (
                                 <ErrorForm text="Podaj nazwe"></ErrorForm>
                             )}
@@ -106,7 +108,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                         <div className="flex">
                             {" "}
                             <label htmlFor="description">
-                                Opis mieszkania
+                                {t("apartment_description")}
                             </label>{" "}
                             {errors.description && (
                                 <ErrorForm text="Podaj opis"></ErrorForm>
@@ -130,7 +132,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                         {" "}
                         <div className="flex">
                             {" "}
-                            <label htmlFor="locator">Lokator</label>{" "}
+                            <label htmlFor="locator">{t("locator")}</label>{" "}
                             {errors.locator && (
                                 <ErrorForm text="Podaj lokatora"></ErrorForm>
                             )}
@@ -160,7 +162,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                             className="bg-red-700 p-2 border-2 border-black rounded-lg font-bold w-40"
                             onClick={() => onClose()}
                         >
-                            Anuluj
+                            {t("cancel")}
                         </button>
                     </div>
                 </form>

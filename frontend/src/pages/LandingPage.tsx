@@ -2,7 +2,9 @@ import { Link } from "react-router-dom";
 import Icon from "../../public/iconBills.svg";
 import X from "../../public/X.svg";
 import Yes from "../../public/Yes.svg";
+import { useTranslation } from "react-i18next";
 function LandingPage() {
+    const { t } = useTranslation();
     return (
         <div className="w-full h-screen bg-background-color  flex flex-col items-start p-4 gap-20">
             <div className="w-full flex justify-between items-center">
@@ -10,6 +12,7 @@ function LandingPage() {
                 <div className="text-5xl font-bold flex justify-center items-center gap-5">
                     Payment Pal <img src={Icon} width="100px"></img>
                 </div>
+                <h1>{t("hello_world")}</h1>
                 <div>
                     <Link
                         to="/login"

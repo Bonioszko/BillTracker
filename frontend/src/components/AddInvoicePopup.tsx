@@ -2,6 +2,7 @@ import { FormEvent, useContext, useState } from "react";
 import { UserContext, UserContextType } from "../context/UserContext";
 import { ToastContainer, toast } from "react-toastify";
 import ErrorForm from "./ErrorForm";
+import { useTranslation } from "react-i18next";
 import "react-toastify/dist/ReactToastify.css";
 interface AddInvoicePopupProps {
     onClose: () => void;
@@ -19,6 +20,7 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
     apartment_id,
     refresh,
 }) => {
+    const { t } = useTranslation();
     const [errors, setErrors] = useState<Errors>({});
     const { user, setUser } = useContext(UserContext) as UserContextType;
     const [formData, setFormData] = useState({
@@ -34,11 +36,11 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
             date: "",
         };
         if (!formData.name) {
-            newErrors.name = "Podaj nazwe";
+            newErrors.name = t("give_name");
             isValid = false;
         }
         if (!formData.date) {
-            newErrors.date = "Podaj date";
+            newErrors.date = t("give_date");
             isValid = false;
         }
         setErrors(newErrors);
@@ -74,17 +76,17 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
         >
             <div className="w-1/2 h-1/2 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20">
                 <h1 className="text-xl">
-                    Dodaj fakturę dla
+                    {t("add_invoice")}
                     <span className="font-bold"> {category}</span>
                 </h1>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div className="flex flex-col">
                         {" "}
-                        <div className="flex">
+                        <div className="flex justify-between">
                             {" "}
-                            <label htmlFor="fname">Nazwa faktury</label>
+                            <label htmlFor="fname"> {t("invoice_name")}</label>
                             {errors.name && (
-                                <ErrorForm text="Podaj nazwe"></ErrorForm>
+                                <ErrorForm text={errors.name}></ErrorForm>
                             )}
                         </div>
                         <input
@@ -103,11 +105,14 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                     </div>
                     <div className="flex flex-col">
                         {" "}
-                        <div className="flex">
+                        <div className="flex justify-between">
                             {" "}
-                            <label htmlFor="date">Data faktury</label>{" "}
+                            <label htmlFor="date">
+                                {" "}
+                                {t("invoice_date")}
+                            </label>{" "}
                             {errors.date && (
-                                <ErrorForm text="Podaj date"></ErrorForm>
+                                <ErrorForm text={errors.date}></ErrorForm>
                             )}
                         </div>
                         <input
@@ -135,7 +140,7 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                             className="bg-red-700 p-2 border-2 border-black rounded-lg font-bold w-40"
                             onClick={() => onClose()}
                         >
-                            Anuluj
+                            {t("cancel")}
                         </button>
                     </div>
                 </form>

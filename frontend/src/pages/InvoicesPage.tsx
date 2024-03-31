@@ -1,11 +1,10 @@
 import { useEffect, useState, useContext } from "react";
 import CurrentApartment from "../components/CurrentApartment";
-import Navbar from "../components/Navbar";
 import AddApartmentPopoup from "../components/AddApartmentPopup";
 import { UserContextType, UserContext } from "../context/UserContext";
 import PlusIcon from "../../public/plus.svg";
 import Layout from "../components/Layouts/Layout";
-export const Categories = ["Czynsz", "Woda", "Prąd", "Spółdzielnia"];
+export const Categories = ["Rent", "Water", "Electricity", "Cooperative"];
 
 export type Category = (typeof Categories)[number];
 
@@ -28,7 +27,7 @@ export type Apartment = {
 };
 
 function InvoicesPage() {
-    const { user, setUser } = useContext(UserContext) as UserContextType;
+    const { user } = useContext(UserContext) as UserContextType;
     const [apartments, setApartments] = useState<Apartment[]>();
     const [activeApartment, setActiveApartment] = useState(0);
     const [refresh, setRefresh] = useState(false);

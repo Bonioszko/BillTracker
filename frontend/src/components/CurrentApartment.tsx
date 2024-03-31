@@ -2,16 +2,14 @@ import { useEffect, useState } from "react";
 import { Invoice, Apartment, Categories } from "../pages/InvoicesPage";
 import Cell from "./Cell";
 import TitleInvoices from "./TitleInvoices";
-import woda from "../../public/water.svg";
-import czynsz from "../../public/Bill.svg";
-import prąd from "../../public/electricity.svg";
-import spółdzielnia from "../../public/house.svg";
+import water from "../../public/water.svg";
+import rent from "../../public/Bill.svg";
+import electricity from "../../public/electricity.svg";
+import cooperative from "../../public/house.svg";
 import Popup from "./Popup";
 import PlusIcon from "../../public/plus.svg";
 import AddInvoicePopup from "./AddInvoicePopup";
-import Checked from "../../public/checkbox-checked-svgrepo-com.svg";
-import { set } from "mongoose";
-
+import { useTranslation } from "react-i18next";
 interface CurrentApartmentProps extends Apartment {
     active: boolean;
     setRefresh: () => void;
@@ -22,11 +20,10 @@ interface CurrentApartmentProps extends Apartment {
     active: boolean;
 }
 const categoryIcons = new Map([
-    ["Woda", woda],
-    ["Czynsz", czynsz],
-    ["Prąd", prąd],
-    ["Spółdzielnia", spółdzielnia],
-    // Add more categories here
+    ["Water", water],
+    ["Rent", rent],
+    ["Electricity", electricity],
+    ["Cooperative", cooperative],
 ]);
 const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     name,
@@ -39,6 +36,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     setRefresh,
     refresh,
 }) => {
+    const { t } = useTranslation();
     const [currentCategory, setCurrentCategory] = useState(Categories[0]);
 
     const [currentInvoices, setCurrentInvoices] = useState<Invoice[]>([]);
@@ -77,7 +75,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                 <div className="flex flex-col items-center gap-4 p-5 ">
                     <h1 className="text-2xl font-semibold">{name}</h1>
                     <div>
-                        {description} lokator: {locator}
+                        {description} {t("locator")}: {locator}
                     </div>
                     <div className="flex gap-10 w-full items-center justify-center">
                         {Categories.map((category, index) => (
@@ -89,7 +87,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                         : ""
                                 }`}
                             >
-                                {category}
+                                {t(category.toLowerCase())}
                                 <img
                                     src={categoryIcons.get(category)}
                                     className={`w-10 ${
@@ -103,10 +101,10 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                     </div>
                     <div className="flex flex-col gap-4">
                         <div className="flex gap-1">
-                            <TitleInvoices title="Tytuł"></TitleInvoices>
-                            <TitleInvoices title="Data"></TitleInvoices>
-                            <TitleInvoices title=" Mi"></TitleInvoices>
-                            <TitleInvoices title="Ja"></TitleInvoices>
+                            <TitleInvoices title={t("title")}></TitleInvoices>
+                            <TitleInvoices title={t("date")}></TitleInvoices>
+                            <TitleInvoices title={t("me")}></TitleInvoices>
+                            <TitleInvoices title={t("I")}></TitleInvoices>
                         </div>
                         <div className="w-full bg-white h-1"></div>
                         <div className="flex flex-col gap-1">
@@ -211,7 +209,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                 ))
                             ) : (
                                 <div className="text-center text-2xl">
-                                    You do not have invoices for that category
+                                    {t("not_invoice")}
                                 </div>
                             )}
                         </div>
