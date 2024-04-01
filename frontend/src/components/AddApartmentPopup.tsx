@@ -78,15 +78,15 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
             style={{ backgroundColor: "rgba(107, 114, 128, 0.45)" }}
         >
             {" "}
-            <div className="w-1/2 h-1/2 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20">
+            <div className="w-11/12 lg:w-1/2 sm:h-1/2 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20">
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div className="flex flex-col">
                         {" "}
-                        <div className="flex">
+                        <div className="flex flex-col">
                             {" "}
                             <label htmlFor="fname">{t("apartment_name")}</label>
                             {errors.name && (
-                                <ErrorForm text="Podaj nazwe"></ErrorForm>
+                                <ErrorForm text={t("give_name")}></ErrorForm>
                             )}
                         </div>
                         <input
@@ -105,13 +105,15 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                     </div>
                     <div className="flex flex-col">
                         {" "}
-                        <div className="flex">
+                        <div className="flex flex-col">
                             {" "}
                             <label htmlFor="description">
                                 {t("apartment_description")}
                             </label>{" "}
                             {errors.description && (
-                                <ErrorForm text="Podaj opis"></ErrorForm>
+                                <ErrorForm
+                                    text={t("give_description")}
+                                ></ErrorForm>
                             )}
                         </div>
                         <input
@@ -130,7 +132,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                     </div>
                     <div className="flex flex-col">
                         {" "}
-                        <div className="flex">
+                        <div className="flex flex-col">
                             {" "}
                             <label htmlFor="locator">{t("locator")}</label>{" "}
                             {errors.locator && (
@@ -151,15 +153,15 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                             }
                         />
                     </div>
-                    <div>
+                    <div className="flex justify-between">
                         {" "}
                         <input
                             type="submit"
                             value="Submit"
-                            className="bg-primary-color p-2 rounded-lg w-40"
+                            className="bg-primary-color p-2 rounded-lg border-2 cursor-pointer sm:w-20 border-black font-bold transform hover:scale-105"
                         />{" "}
                         <button
-                            className="bg-red-700 p-2 border-2 border-black rounded-lg font-bold w-40"
+                            className="bg-red-700 p-2 border-2 border-black rounded-lg font-bold sm:w-20 transform hover:scale-105"
                             onClick={() => onClose()}
                         >
                             {t("cancel")}

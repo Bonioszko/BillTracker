@@ -74,7 +74,7 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
             className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center transition-none"
             style={{ backgroundColor: "rgba(107, 114, 128, 0.45)" }}
         >
-            <div className="w-1/2 h-1/2 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20">
+            <div className="w-11/12 lg:w-1/2 sm:h-1/2 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20">
                 <h1 className="text-xl">
                     {t("add_invoice")}
                     <span className="font-bold"> {category}</span>
@@ -82,7 +82,7 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div className="flex flex-col">
                         {" "}
-                        <div className="flex justify-between">
+                        <div className="flex flex-col">
                             {" "}
                             <label htmlFor="fname"> {t("invoice_name")}</label>
                             {errors.name && (
@@ -105,7 +105,7 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                     </div>
                     <div className="flex flex-col">
                         {" "}
-                        <div className="flex justify-between">
+                        <div className="flex flex-col">
                             {" "}
                             <label htmlFor="date">
                                 {" "}
@@ -129,15 +129,15 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                             }
                         />
                     </div>
-                    <div>
+                    <div className="flex justify-between">
                         {" "}
                         <input
                             type="submit"
                             value="Submit"
-                            className="bg-primary-color p-2 rounded-lg w-40"
+                            className="bg-primary-color p-2 rounded-lg border-2 cursor-pointer sm:w-20 border-black font-bold transform hover:scale-105"
                         />{" "}
                         <button
-                            className="bg-red-700 p-2 border-2 border-black rounded-lg font-bold w-40"
+                            className="bg-red-700 p-2 border-2 border-black rounded-lg font-bold sm:w-20 transform hover:scale-105"
                             onClick={() => onClose()}
                         >
                             {t("cancel")}

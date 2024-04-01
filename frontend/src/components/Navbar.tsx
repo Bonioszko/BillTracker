@@ -49,7 +49,7 @@ export default function Navbar() {
                     )}
                 </div>
                 {(isOpen || !isMobile) && (
-                    <div className="flex flex-col sm:flex-row gap-5 items-center justify-center">
+                    <div className="flex flex-col sm:flex-row gap-2 lg:gap-5 items-center justify-center">
                         {user ? (
                             <Logout className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color"></Logout>
                         ) : (

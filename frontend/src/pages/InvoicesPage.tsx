@@ -82,55 +82,69 @@ function InvoicesPage() {
     }, [user, refresh]);
     return (
         <Layout>
-            <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-evenly items-center rounded-lg">
-                <div className="overflow-x-auto flex items-center gap-2 px-2 lg:px-10">
-                    {apartments &&
-                        apartments.map((apartment, index) => (
-                            <div
-                                className={`lg:text-2xl font-bold p-2 rounded-lg cursor-pointer max-w-96 text-center ${
-                                    index === activeApartment
-                                        ? "bg-primary-color text-black"
-                                        : "text-text-color"
-                                }`}
-                                onClick={() => setActiveApartment(index)}
-                            >
-                                {apartment.name}
-                            </div>
-                        ))}
-                </div>
-                <div className="flex justify-center w-20 lg:w-20">
-                    {apartments && (
-                        <img
-                            src={PlusIcon}
-                            alt=""
-                            className="w-6 lg:w-20 cursor-pointer"
-                            onClick={() => setAddApartmentPopupBool(true)}
-                        />
+            {user ? (
+                <>
+                    <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-evenly items-center rounded-lg">
+                        <div className="overflow-x-auto flex items-center gap-2 px-2 lg:px-10">
+                            {apartments &&
+                                apartments.map((apartment, index) => (
+                                    <div
+                                        className={`lg:text-2xl font-bold p-2 rounded-lg cursor-pointer max-w-96 text-center ${
+                                            index === activeApartment
+                                                ? "bg-primary-color text-black"
+                                                : "text-text-color"
+                                        }`}
+                                        onClick={() =>
+                                            setActiveApartment(index)
+                                        }
+                                    >
+                                        {apartment.name}
+                                    </div>
+                                ))}
+                        </div>
+                        <div className="flex justify-center w-20 lg:w-20">
+                            {apartments && (
+                                <img
+                                    src={PlusIcon}
+                                    alt=""
+                                    className="w-6 lg:w-20 cursor-pointer"
+                                    onClick={() =>
+                                        setAddApartmentPopupBool(true)
+                                    }
+                                />
+                            )}
+                        </div>
+                    </div>
+                    <div className="h-5/6 bg-secondary-color w-11/12 lg:w-10/12  rounded-lg">
+                        {apartments &&
+                            apartments.map((apartment, index) => (
+                                <CurrentApartment
+                                    key={index}
+                                    name={apartment.name}
+                                    _id={apartment._id}
+                                    description={apartment.description}
+                                    locator={apartment.locator}
+                                    invoices={apartment.invoices}
+                                    owner={apartment.owner}
+                                    active={
+                                        index === activeApartment ? true : false
+                                    }
+                                    setRefresh={toggleRefresh}
+                                    refresh={refresh}
+                                ></CurrentApartment>
+                            ))}
+                    </div>
+                    {addApartmentPopupBool && (
+                        <AddApartmentPopoup
+                            onClose={() => setAddApartmentPopupBool(false)}
+                            refresh={() => toggleRefresh()}
+                        ></AddApartmentPopoup>
                     )}
+                </>
+            ) : (
+                <div className="text-3xl font-bold">
+                    To access this content you must be logged in
                 </div>
-            </div>
-            <div className="h-5/6 bg-secondary-color w-11/12 lg:w-10/12  rounded-lg">
-                {apartments &&
-                    apartments.map((apartment, index) => (
-                        <CurrentApartment
-                            key={index}
-                            name={apartment.name}
-                            _id={apartment._id}
-                            description={apartment.description}
-                            locator={apartment.locator}
-                            invoices={apartment.invoices}
-                            owner={apartment.owner}
-                            active={index === activeApartment ? true : false}
-                            setRefresh={toggleRefresh}
-                            refresh={refresh}
-                        ></CurrentApartment>
-                    ))}
-            </div>
-            {addApartmentPopupBool && (
-                <AddApartmentPopoup
-                    onClose={() => setAddApartmentPopupBool(false)}
-                    refresh={() => toggleRefresh()}
-                ></AddApartmentPopoup>
             )}
         </Layout>
     );

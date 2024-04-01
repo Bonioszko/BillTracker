@@ -72,6 +72,8 @@ i18n
                     give_name: "Name required",
                     give_date: "Date required",
                     give_password: "Password required",
+                    give_locator: "Locator required",
+                    give_description: "Description required",
                     give_email: "Email required",
                     not_invoice:
                         "Youd do not have any invoice for that category",
@@ -111,6 +113,8 @@ i18n
                     invoice_date: "Data faktury",
                     give_name: "Wymagane imię",
                     give_date: "Wymagana data",
+                    give_locator: "Wymagany lokator",
+                    give_description: "Wymagany opis",
                     not_invoice:
                         "Nie masz jeszcze żadnej faktury w tej kategorii",
                     home: "Strona główna",
