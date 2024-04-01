@@ -4,6 +4,7 @@ import AddApartmentPopoup from "../components/AddApartmentPopup";
 import { UserContextType, UserContext } from "../context/UserContext";
 import PlusIcon from "../../public/plus.svg";
 import Layout from "../components/Layouts/Layout";
+import Loading from "../../public/loading.svg";
 export const Categories = ["Rent", "Water", "Electricity", "Cooperative"];
 
 export type Category = (typeof Categories)[number];
@@ -35,11 +36,12 @@ function InvoicesPage() {
     const toggleRefresh = () => {
         setRefresh(!refresh);
     };
+    const [isLoading, setIsLoading] = useState(true); // Add this line
 
     useEffect(() => {
         const fetchData = async () => {
             if (user) {
-                // Fetch invoices
+                setIsLoading(true);
                 const invoiceResponse = await fetch(`/api/invoice/${user._id}`);
                 const invoiceData = await invoiceResponse.json();
                 let invoices: Invoice[] = [];
@@ -72,6 +74,7 @@ function InvoicesPage() {
 
                     setApartments(apartmentsWithInvoices);
                 }
+                setIsLoading(false);
             }
         };
 
@@ -79,12 +82,12 @@ function InvoicesPage() {
     }, [user, refresh]);
     return (
         <Layout>
-            <div className="w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-evenly items-center rounded-lg">
-                <div className="overflow-x-auto flex items-center gap-2 px-10">
+            <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-evenly items-center rounded-lg">
+                <div className="overflow-x-auto flex items-center gap-2 px-2 lg:px-10">
                     {apartments &&
                         apartments.map((apartment, index) => (
                             <div
-                                className={`text-2xl font-bold p-2 rounded-lg cursor-pointer max-w-44 text-center ${
+                                className={`lg:text-2xl font-bold p-2 rounded-lg cursor-pointer max-w-96 text-center ${
                                     index === activeApartment
                                         ? "bg-primary-color text-black"
                                         : "text-text-color"
@@ -95,16 +98,18 @@ function InvoicesPage() {
                             </div>
                         ))}
                 </div>
-                <div className="flex justify-center w-20">
-                    <img
-                        src={PlusIcon}
-                        alt=""
-                        className="w-20 cursor-pointer"
-                        onClick={() => setAddApartmentPopupBool(true)}
-                    />
+                <div className="flex justify-center w-20 lg:w-20">
+                    {apartments && (
+                        <img
+                            src={PlusIcon}
+                            alt=""
+                            className="w-6 lg:w-20 cursor-pointer"
+                            onClick={() => setAddApartmentPopupBool(true)}
+                        />
+                    )}
                 </div>
             </div>
-            <div className="h-5/6 bg-secondary-color w-10/12  rounded-lg">
+            <div className="h-5/6 bg-secondary-color w-11/12 lg:w-10/12  rounded-lg">
                 {apartments &&
                     apartments.map((apartment, index) => (
                         <CurrentApartment

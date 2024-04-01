@@ -3,12 +3,15 @@ import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ErrorForm from "../components/ErrorForm";
 import Layout from "../components/Layouts/Layout";
+
+import { useTranslation } from "react-i18next";
 type Errors = {
     name?: string;
     email?: string;
     password?: string;
 };
 function SignIn() {
+    const { t } = useTranslation();
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -27,18 +30,18 @@ function SignIn() {
             name: "",
         };
         if (!formData.email) {
-            newErrors.email = "Podaj email";
+            newErrors.email = t("give_email");
             isValid = false;
         }
         if (!formData.password) {
-            newErrors.password = "Podaj haslo";
+            newErrors.password = t("give_password");
             isValid = false;
         } else if (formData.password.length < 6) {
-            newErrors.password = "Haslo musi miec conajmniej 6 liter";
+            newErrors.password = t("password_6");
             isValid = false;
         }
         if (!formData.name) {
-            newErrors.name = "Podaj imie";
+            newErrors.name = t("give_name");
             isValid = false;
         }
 
@@ -77,16 +80,18 @@ function SignIn() {
     };
     return (
         <Layout>
-            <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-10 p-14 items-center rounded-lg">
-                <h2 className="text-2xl">Sign In</h2>
+            <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-5 sm:gap-10 p-5 sm:p-14 items-center rounded-lg">
+                <h2 className="text-3xl font-bold text-center">
+                    {t("sign_in")}
+                </h2>
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col justify-between h-3/5 w-1/2 bg-background-color p-5 rounded-lg gap-5"
+                    className="flex flex-col justify-between h-3/5 sm:w-1/2 max-w-2xl bg-background-color p-5 rounded-lg gap-5"
                 >
                     <div className="flex flex-col gap-1">
                         <div className="flex justify-between items-center">
                             <label htmlFor="name" className="text-xl">
-                                name
+                                {t("name")}
                             </label>
                             {errors.name && (
                                 <ErrorForm text={errors.name}></ErrorForm>
@@ -110,7 +115,7 @@ function SignIn() {
                     <div className="flex flex-col gap-1">
                         <div className="flex justify-between items-center">
                             <label htmlFor="email" className="text-xl">
-                                email
+                                Email
                             </label>
                             {errors.email && (
                                 <ErrorForm text={errors.email}></ErrorForm>
@@ -134,7 +139,7 @@ function SignIn() {
                     <div className="flex flex-col gap-1 ">
                         <div className="flex justify-between items-center">
                             <label htmlFor="password" className="text-xl">
-                                password
+                                {t("password")}
                             </label>
                             {errors.password && (
                                 <ErrorForm text={errors.password}></ErrorForm>
@@ -157,7 +162,7 @@ function SignIn() {
                     </div>
                     <button
                         type="submit"
-                        className="bg-background-color p-2 rounded-lg border-2 border-cyan-500 hover:bg-secondary-color transform hover:scale-105"
+                        className="bg-background-color p-2 rounded-lg border-2 border-cyan-500 hover:bg-secondary-color "
                     >
                         {" "}
                         submit

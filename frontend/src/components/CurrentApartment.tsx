@@ -73,15 +73,20 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
         <>
             {active ? (
                 <div className="flex flex-col items-center gap-4 p-5 ">
-                    <h1 className="text-2xl font-semibold">{name}</h1>
-                    <div>
-                        {description} {t("locator")}: {locator}
+                    <div className="sm:w-1/2 flex justify-between sm:px-6">
+                        {" "}
+                        <h1 className="text-2xl font-semibold">{name}</h1>
+                        <div className="text-xl"> {description}</div>
+                        <div className="text-xl">
+                            {t("locator")}: {locator}
+                        </div>
                     </div>
-                    <div className="flex gap-10 w-full items-center justify-center">
+
+                    <div className="flex gap-2 lg:gap-10  lg:w-full items-center justify-center">
                         {Categories.map((category, index) => (
                             <div
                                 onClick={() => setCurrentCategory(category)}
-                                className={`font-bold p-1 rounded-lg cursor-pointer w-50 text-center text-2xl flex gap-2   ${
+                                className={`font-bold p-1 rounded-lg cursor-pointer w-50 text-center lg:text-2xl flex flex-col lg:flex-row gap-2 justify-center items-center  ${
                                     Categories[index] === currentCategory
                                         ? "bg-secondary-color text-text-color"
                                         : ""
@@ -100,7 +105,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                         ))}
                     </div>
                     <div className="flex flex-col gap-4">
-                        <div className="flex gap-1">
+                        <div className="flex gap-1 justify-center">
                             <TitleInvoices title={t("title")}></TitleInvoices>
                             <TitleInvoices title={t("date")}></TitleInvoices>
                             <TitleInvoices title={t("me")}></TitleInvoices>
@@ -138,7 +143,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                             });
                                                             setRefresh();
                                                         }}
-                                                        className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
+                                                        className={`appearance-none w-6 h-6 border-2 outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
                                                     />
                                                     {popupTheir.visible && (
                                                         <Popup
@@ -179,7 +184,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
 
                                                             setRefresh();
                                                         }}
-                                                        className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
+                                                        className={`appearance-none w-6 h-6 border-2  outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
                                                     />
                                                     {popupMe.visible && (
                                                         <Popup

@@ -5,12 +5,14 @@ import "react-toastify/dist/ReactToastify.css";
 import { UserContextType, UserContext } from "../context/UserContext";
 import Layout from "../components/Layouts/Layout";
 import ErrorForm from "../components/ErrorForm";
-import { t } from "i18next";
+import { useTranslation } from "react-i18next";
+
 type Errors = {
     email?: string;
     password?: string;
 };
 function Login() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { user, setUser } = useContext(UserContext) as UserContextType;
     const [errors, setErrors] = useState<Errors>({
@@ -28,11 +30,11 @@ function Login() {
             password: "",
         };
         if (!formData.email) {
-            newErrors.email = "Podaj email";
+            newErrors.email = t("give_email");
             isValid = false;
         }
         if (!formData.password) {
-            newErrors.password = "Podaj haslo";
+            newErrors.password = t("give_password");
             isValid = false;
         }
         setErrors(newErrors);
@@ -71,19 +73,19 @@ function Login() {
     };
     return (
         <Layout>
-            <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-10 p-14 items-center rounded-lg">
+            <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-5 sm:gap-10 p-14 items-center rounded-lg">
                 {!user ? (
                     <>
-                        <h2 className="text-2xl">Login</h2>
+                        <h2 className="text-3xl font-bold">Login</h2>
                         <form
                             onSubmit={handleSubmit}
-                            className="flex flex-col justify-between h-2/5 w-1/2 gap-5 bg-background-color p-5 rounded-lg"
+                            className="flex flex-col justify-between h-2/5 sm:w-1/2 max-w-2xl gap-5 bg-background-color p-5 rounded-lg"
                         >
                             <div className="flex flex-col gap-1">
                                 <div className="flex justify-between items-center">
                                     {" "}
                                     <label htmlFor="email" className="text-xl">
-                                        email
+                                        Email
                                     </label>{" "}
                                     {errors.email && (
                                         <ErrorForm
@@ -138,7 +140,7 @@ function Login() {
                             </div>
                             <button
                                 type="submit"
-                                className="bg-background-color p-2 rounded-lg border-2 border-cyan-500 hover:bg-secondary-color transform hover:scale-105"
+                                className="bg-background-color p-2 rounded-lg border-2 border-cyan-500 hover:bg-secondary-color"
                             >
                                 {" "}
                                 {t("submit")}
