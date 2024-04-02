@@ -8,6 +8,7 @@ import NotFoundPage from "./pages/NotFoundPage.tsx";
 import SignIn from "./pages/SignInPage.tsx";
 import Login from "./pages/LoginPage.tsx";
 import Profile from "./pages/Profile.tsx";
+import "./i18n/config.ts";
 import UserContextProvider from "./context/UserContext.tsx";
 const router = createBrowserRouter([
     {

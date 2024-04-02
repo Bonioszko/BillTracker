@@ -2,18 +2,20 @@ import { Link } from "react-router-dom";
 import Icon from "../../public/iconBills.svg";
 import X from "../../public/X.svg";
 import Yes from "../../public/Yes.svg";
+import { useTranslation } from "react-i18next";
 function LandingPage() {
+    const { t } = useTranslation();
     return (
-        <div className="w-full h-screen bg-background-color  flex flex-col items-start p-4 gap-20">
+        <div className="w-full h-screen bg-background-color  flex flex-col items-start px-20 py-5 gap-20">
             <div className="w-full flex justify-between items-center">
                 {" "}
-                <div className="text-5xl font-bold flex justify-center items-center gap-5">
+                <div className="text-xl sm:text-4xl font-bold flex justify-center items-center gap-5">
                     Payment Pal <img src={Icon} width="100px"></img>
                 </div>
                 <div>
                     <Link
                         to="/login"
-                        className="text-3xl font-bold bg-secondary-color p-3 rounded-3xl block transform hover:scale-110 "
+                        className="text-2xl font-bold bg-secondary-color p-3 rounded-3xl block transform hover:scale-110 "
                     >
                         Login
                     </Link>
@@ -24,7 +26,10 @@ function LandingPage() {
                 <h1 className="text-3xl font-bold">
                     You are a property owner, we can help you
                 </h1>
-
+                <div>
+                    <div>Never miss a paymnent ever again</div>
+                    <div></div>
+                </div>
                 <div className="flex w-2/5 text-2xl bg-secondary-color p-5 rounded-2xl">
                     Introducing - a convenient app that helps you keep track of
                     who has paid your bills (such as water and electricity), and
@@ -36,7 +41,7 @@ function LandingPage() {
                     of your financial obligations and payments with this
                     user-friendly app today.
                 </div>
-                <div className="flex gap-20 transform ">
+                <div className="flex lg:flex-row flex-col gap-20 transform ">
                     <div className="text-white bg-gradient-to-r from-red-400 to-red-700 flex flex-col gap-5 p-7 rounded-lg">
                         <div className="flex items-center gap-50 text-xl font-semibold">
                             <img src={X} width="50px"></img>No need for boring

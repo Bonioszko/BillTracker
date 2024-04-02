@@ -1,13 +1,13 @@
 import { useState, useContext, ClassAttributes } from "react";
 import { UserContextType, UserContext } from "../context/UserContext";
-
+import { useTranslation } from "react-i18next";
 interface LogoutProps {
     className?: string;
 }
 
 export default function Logout({ className }: LogoutProps) {
     const { user, setUser } = useContext(UserContext) as UserContextType;
-
+    const { t } = useTranslation();
     const handleLogout = async () => {
         // Make a request to your server's logout endpoint
         const response = await fetch("/api/auth/logout", {
@@ -28,7 +28,7 @@ export default function Logout({ className }: LogoutProps) {
     return (
         <>
             <button onClick={handleLogout} className={` ${className}`}>
-                Logout
+                {t("logout")}
             </button>
         </>
     );

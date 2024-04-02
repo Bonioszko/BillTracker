@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import { Invoice, Apartment, Categories } from "../pages/InvoicesPage";
 import Cell from "./Cell";
 import TitleInvoices from "./TitleInvoices";
-import water from "../../public/icon (2).svg";
+import water from "../../public/water.svg";
+import rent from "../../public/Bill.svg";
+import electricity from "../../public/electricity.svg";
+import cooperative from "../../public/house.svg";
 import Popup from "./Popup";
 import PlusIcon from "../../public/plus.svg";
 import AddInvoicePopup from "./AddInvoicePopup";
-import Checked from "../../public/checkbox-checked-svgrepo-com.svg";
-import { set } from "mongoose";
-
+import { useTranslation } from "react-i18next";
 interface CurrentApartmentProps extends Apartment {
     active: boolean;
     setRefresh: () => void;
@@ -18,7 +19,12 @@ interface CurrentApartmentProps extends Apartment {
 interface CurrentApartmentProps extends Apartment {
     active: boolean;
 }
-
+const categoryIcons = new Map([
+    ["Water", water],
+    ["Rent", rent],
+    ["Electricity", electricity],
+    ["Cooperative", cooperative],
+]);
 const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     name,
     description,
@@ -30,6 +36,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     setRefresh,
     refresh,
 }) => {
+    const { t } = useTranslation();
     const [currentCategory, setCurrentCategory] = useState(Categories[0]);
 
     const [currentInvoices, setCurrentInvoices] = useState<Invoice[]>([]);
@@ -66,39 +73,52 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
         <>
             {active ? (
                 <div className="flex flex-col items-center gap-4 p-5 ">
-                    <h1 className="text-2xl font-semibold">{name}</h1>
-                    <div>
-                        {description} lokator: {locator}
-                    </div>
-                    <div className="flex gap-10 w-full items-center justify-center">
+                    {/* <div className="sm:w-1/2 flex justify-between sm:px-6">
+                        {" "}
+                        <h1 className="text-2xl font-semibold">{name}</h1>
+                        <div className="text-xl"> {description}</div>
+                        <div className="text-xl">
+                            {t("locator")}: {locator}
+                        </div>
+                    </div> */}
+
+                    <div className="flex gap-2 lg:gap-10  lg:w-full items-center justify-center">
                         {Categories.map((category, index) => (
                             <div
                                 onClick={() => setCurrentCategory(category)}
-                                className={`font-bold p-1 rounded-lg cursor-pointer w-50 text-center text-2xl flex gap-2  ${
+                                className={`font-bold p-1 rounded-lg cursor-pointer w-50 text-center lg:text-2xl flex flex-col lg:flex-row gap-2 justify-center items-center  ${
                                     Categories[index] === currentCategory
                                         ? "bg-secondary-color text-text-color"
                                         : ""
                                 }`}
                             >
-                                {category}
-                                <img src={water} className="w-10"></img>
+                                {t(category.toLowerCase())}
+                                <img
+                                    src={categoryIcons.get(category)}
+                                    className={`w-10 ${
+                                        Categories[index] === currentCategory
+                                            ? "rotate-12"
+                                            : ""
+                                    }`}
+                                ></img>
                             </div>
                         ))}
                     </div>
                     <div className="flex flex-col gap-4">
-                        <div className="flex gap-1">
-                            <TitleInvoices title="Tytuł"></TitleInvoices>
-                            <TitleInvoices title="Data"></TitleInvoices>
-                            <TitleInvoices title=" Mi"></TitleInvoices>
-                            <TitleInvoices title="Ja"></TitleInvoices>
+                        <div className="flex gap-1 justify-center">
+                            {/* <TitleInvoices title={t("title")}></TitleInvoices> */}
+                            <TitleInvoices title={t("amount")}></TitleInvoices>
+                            <TitleInvoices title={t("date")}></TitleInvoices>
+                            <TitleInvoices title={t("me")}></TitleInvoices>
+                            <TitleInvoices title={t("I")}></TitleInvoices>
                         </div>
                         <div className="w-full bg-white h-1"></div>
                         <div className="flex flex-col gap-1">
                             {currentInvoices.length > 0 ? (
                                 currentInvoices.map((invoice, index) => (
                                     <div className="flex gap-1">
-                                        <Cell content={invoice.name} />
-
+                                        {/* <Cell content={invoice.name} /> */}
+                                        <Cell content={invoice.amount} />
                                         <Cell
                                             content={invoice.date.toLocaleDateString(
                                                 "en-GB",
@@ -124,28 +144,33 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                             });
                                                             setRefresh();
                                                         }}
-                                                        className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
+                                                        className={`appearance-none w-6 h-6 border-2 outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
                                                     />
-                                                    {popupTheir.visible && (
-                                                        <Popup
-                                                            onClose={() =>
-                                                                setPopupTheir({
-                                                                    visible:
-                                                                        false,
-                                                                    index: 0,
-                                                                })
-                                                            }
-                                                            togglePaidByLocator={() =>
-                                                                togglePaidByLocator(
-                                                                    popupTheir.index,
-                                                                    true
-                                                                )
-                                                            }
-                                                            currValue={
-                                                                invoice.paidByLocator
-                                                            }
-                                                        ></Popup>
-                                                    )}
+                                                    {popupTheir.index ===
+                                                        index &&
+                                                        popupTheir.visible ===
+                                                            true && (
+                                                            <Popup
+                                                                onClose={() =>
+                                                                    setPopupTheir(
+                                                                        {
+                                                                            visible:
+                                                                                false,
+                                                                            index: 0,
+                                                                        }
+                                                                    )
+                                                                }
+                                                                togglePaidByLocator={() =>
+                                                                    togglePaidByLocator(
+                                                                        popupTheir.index,
+                                                                        true
+                                                                    )
+                                                                }
+                                                                currValue={
+                                                                    invoice.paidByLocator
+                                                                }
+                                                            ></Popup>
+                                                        )}
                                                 </>
                                             }
                                         />
@@ -165,29 +190,31 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
 
                                                             setRefresh();
                                                         }}
-                                                        className={`appearance-none w-6 h-6 border-2 border-third-color outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
+                                                        className={`appearance-none w-6 h-6 border-2  outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
                                                     />
-                                                    {popupMe.visible && (
-                                                        <Popup
-                                                            onClose={() =>
-                                                                setPopupMe({
-                                                                    visible:
-                                                                        false,
+                                                    {popupMe.index === index &&
+                                                        popupMe.visible ===
+                                                            true && (
+                                                            <Popup
+                                                                onClose={() =>
+                                                                    setPopupMe({
+                                                                        visible:
+                                                                            false,
 
-                                                                    index: 0,
-                                                                })
-                                                            }
-                                                            togglePaidByLocator={() =>
-                                                                togglePaidByLocator(
-                                                                    popupMe.index,
-                                                                    false
-                                                                )
-                                                            }
-                                                            currValue={
-                                                                invoice.paidByMe
-                                                            }
-                                                        ></Popup>
-                                                    )}
+                                                                        index: 0,
+                                                                    })
+                                                                }
+                                                                togglePaidByLocator={() =>
+                                                                    togglePaidByLocator(
+                                                                        popupMe.index,
+                                                                        false
+                                                                    )
+                                                                }
+                                                                currValue={
+                                                                    invoice.paidByMe
+                                                                }
+                                                            ></Popup>
+                                                        )}
                                                 </>
                                             }
                                         />
@@ -195,7 +222,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                 ))
                             ) : (
                                 <div className="text-center text-2xl">
-                                    You do not have invoices for that category
+                                    {t("not_invoice")}
                                 </div>
                             )}
                         </div>
@@ -203,7 +230,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                             <img
                                 src={PlusIcon}
                                 alt=""
-                                className="w-20 cursor-pointer"
+                                className="w-10 lg:w-20 cursor-pointer"
                                 onClick={() => {
                                     setAddInvoicePopoup(true);
                                 }}

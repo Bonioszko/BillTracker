@@ -1,1 +1,1 @@
-export default ["Czynsz", "Spółdzielnia", "Prąd", "Woda"];
+export default ["Rent", "Cooperative", "Electricity", "Water"];
