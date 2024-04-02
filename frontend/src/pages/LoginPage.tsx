@@ -59,11 +59,9 @@ function Login() {
                     toast.success(responseData.error);
                 } else {
                     setUser(responseData);
+                    toast.success(t("logged_in_popup") + responseData.name);
                     setTimeout(() => {
                         navigate("/main");
-                        toast.success(
-                            "You are logged as: " + responseData.name
-                        );
                     }, 1000);
                 }
             } catch (err) {

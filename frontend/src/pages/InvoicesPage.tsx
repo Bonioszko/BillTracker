@@ -12,6 +12,7 @@ export type Category = (typeof Categories)[number];
 export type Invoice = {
     category: Category;
     apartment: string;
+    amount: number;
     name: string;
     date: Date;
     paidByMe: boolean;

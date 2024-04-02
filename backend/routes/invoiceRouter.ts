@@ -4,11 +4,13 @@ const {
     getAllUserInvoices,
     createInvoice,
     changePaymentInvoice,
-    deleteInvoice
+    deleteInvoice,
+    getInvoiceSummary,
 } = require("../controllers/invoiceController");
 
 invoiceRouter.get("/:id", getAllUserInvoices);
 invoiceRouter.post("/:id", createInvoice);
 invoiceRouter.patch("/:id", changePaymentInvoice);
-invoiceRouter.delete("/:id", deleteInvoice)
+invoiceRouter.delete("/:id", deleteInvoice);
+invoiceRouter.get("/summary/:id", getInvoiceSummary);
 module.exports = invoiceRouter;

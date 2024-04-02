@@ -1,4 +1,4 @@
-import { FormEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../context/UserContext";
 import { ToastContainer, toast } from "react-toastify";
 import ErrorForm from "./ErrorForm";
@@ -13,6 +13,7 @@ interface AddInvoicePopupProps {
 type Errors = {
     name?: string;
     date?: string;
+    amount?: string;
 };
 const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
     onClose,
@@ -22,10 +23,11 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
 }) => {
     const { t } = useTranslation();
     const [errors, setErrors] = useState<Errors>({});
-    const { user, setUser } = useContext(UserContext) as UserContextType;
+    const { user } = useContext(UserContext) as UserContextType;
     const [formData, setFormData] = useState({
         name: "",
         date: "",
+        amount: 0,
         category: category,
         apartment: apartment_id,
     });
@@ -33,10 +35,15 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
         let isValid = true;
         const newErrors = {
             name: "",
+            amount: "",
             date: "",
         };
         if (!formData.name) {
             newErrors.name = t("give_name");
+            isValid = false;
+        }
+        if (!formData.amount) {
+            newErrors.amount = t("give_amount");
             isValid = false;
         }
         if (!formData.date) {
@@ -50,13 +57,19 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
         e.preventDefault();
 
         if (validateForm()) {
-            const { name, date, category, apartment } = formData;
+            const { name, date, category, apartment, amount } = formData;
             const response = await fetch(`/api/invoice/${user?._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, date, category, apartment }),
+                body: JSON.stringify({
+                    name,
+                    date,
+                    category,
+                    apartment,
+                    amount,
+                }),
             });
             if (response.ok) {
                 const data = await response.json();
@@ -99,6 +112,34 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                                 setFormData({
                                     ...formData,
                                     name: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+                    <div className="flex flex-col">
+                        {" "}
+                        <div className="flex flex-col">
+                            {" "}
+                            <label htmlFor="famount">
+                                {" "}
+                                {t("invoice_amount")}
+                            </label>
+                            {errors.amount && (
+                                <ErrorForm text={errors.amount}></ErrorForm>
+                            )}
+                        </div>
+                        <input
+                            type="number"
+                            id="famount"
+                            name="famount"
+                            className="p-2 rounded-lg"
+                            min="1"
+                            step="any"
+                            value={formData.amount}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    amount: Number(e.target.value),
                                 })
                             }
                         />

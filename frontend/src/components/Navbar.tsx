@@ -51,7 +51,7 @@ export default function Navbar() {
                 {(isOpen || !isMobile) && (
                     <div className="flex flex-col sm:flex-row gap-2 lg:gap-5 items-center justify-center">
                         {user ? (
-                            <Logout className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color"></Logout>
+                            <Logout className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color text-center hover:text-background-color"></Logout>
                         ) : (
                             <Link
                                 to="/login"
@@ -66,7 +66,7 @@ export default function Navbar() {
                         >
                             {t("sign_in")}
                         </Link>
-                        <LocaleSwitcher></LocaleSwitcher>
+
                         <Link
                             to="/"
                             className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
@@ -85,6 +85,7 @@ export default function Navbar() {
                         >
                             {t("invoices")}
                         </Link>
+                        <LocaleSwitcher></LocaleSwitcher>
                     </div>
                 )}
             </div>

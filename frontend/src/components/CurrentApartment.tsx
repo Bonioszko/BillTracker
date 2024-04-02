@@ -106,7 +106,8 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                     </div>
                     <div className="flex flex-col gap-4">
                         <div className="flex gap-1 justify-center">
-                            <TitleInvoices title={t("title")}></TitleInvoices>
+                            {/* <TitleInvoices title={t("title")}></TitleInvoices> */}
+                            <TitleInvoices title={t("amount")}></TitleInvoices>
                             <TitleInvoices title={t("date")}></TitleInvoices>
                             <TitleInvoices title={t("me")}></TitleInvoices>
                             <TitleInvoices title={t("I")}></TitleInvoices>
@@ -116,8 +117,8 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                             {currentInvoices.length > 0 ? (
                                 currentInvoices.map((invoice, index) => (
                                     <div className="flex gap-1">
-                                        <Cell content={invoice.name} />
-
+                                        {/* <Cell content={invoice.name} /> */}
+                                        <Cell content={invoice.amount} />
                                         <Cell
                                             content={invoice.date.toLocaleDateString(
                                                 "en-GB",
