@@ -4,7 +4,7 @@ import AddApartmentPopoup from "../components/AddApartmentPopup";
 import { UserContextType, UserContext } from "../context/UserContext";
 import PlusIcon from "../../public/plus.svg";
 import Layout from "../components/Layouts/Layout";
-import Loading from "../../public/loading.svg";
+
 export const Categories = ["Rent", "Water", "Electricity", "Cooperative"];
 
 export type Category = (typeof Categories)[number];

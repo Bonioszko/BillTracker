@@ -104,8 +104,9 @@ const changePaymentInvoice = asyncHandler(
     }
 );
 type Summary = {
-    paidByMeCount: number;
-    paidByLocatorCount: number;
+    _id: null;
+    toPayByMeCount: number;
+    toPayByLocatorsCount: number;
     totalAmountToPay: number;
     totalAmountToReceive: number;
     difference: number;
@@ -124,8 +125,9 @@ const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
     console.log(apartments);
     // const apartmentIds = apartments.map(apartment => apartment._id);
     let summary: Summary = {
-        paidByMeCount: 0,
-        paidByLocatorCount: 0,
+        _id: null,
+        toPayByMeCount: 0,
+        toPayByLocatorsCount: 0,
         totalAmountToPay: 0,
         totalAmountToReceive: 0,
         difference: 0,
@@ -135,11 +137,11 @@ const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
         {
             $group: {
                 _id: null,
-                paidByMeCount: {
-                    $sum: { $cond: [{ $eq: ["$paidByMe", true] }, 1, 0] },
+                toPayByMeCount: {
+                    $sum: { $cond: [{ $eq: ["$paidByMe", false] }, 1, 0] },
                 },
-                paidByLocatorCount: {
-                    $sum: { $cond: [{ $eq: ["$paidByLocator", true] }, 1, 0] },
+                toPayByLocatorsCount: {
+                    $sum: { $cond: [{ $eq: ["$paidByLocator", false] }, 1, 0] },
                 },
                 totalAmountToPay: {
                     $sum: {
@@ -164,7 +166,7 @@ const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
     }
     summary.difference =
         summary.totalAmountToReceive - summary.totalAmountToPay;
-    console.log(summary);
+
     res.status(200).json({
         summary: summary,
     });

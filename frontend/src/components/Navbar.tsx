@@ -35,7 +35,7 @@ export default function Navbar() {
                     {" "}
                     <div className="lg:text-3xl font-bold flex justify-center items-center gap-5">
                         PaymentPal{" "}
-                        <img src={Icon} className="w-8 sm:w-16"></img>
+                        <img src={Icon} className="w-8 lg:w-16"></img>
                     </div>
                     {isMobile && (
                         <button onClick={toggleMenu}>

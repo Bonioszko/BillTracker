@@ -73,14 +73,14 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
         <>
             {active ? (
                 <div className="flex flex-col items-center gap-4 p-5 ">
-                    <div className="sm:w-1/2 flex justify-between sm:px-6">
+                    {/* <div className="sm:w-1/2 flex justify-between sm:px-6">
                         {" "}
                         <h1 className="text-2xl font-semibold">{name}</h1>
                         <div className="text-xl"> {description}</div>
                         <div className="text-xl">
                             {t("locator")}: {locator}
                         </div>
-                    </div>
+                    </div> */}
 
                     <div className="flex gap-2 lg:gap-10  lg:w-full items-center justify-center">
                         {Categories.map((category, index) => (
@@ -146,26 +146,31 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                         }}
                                                         className={`appearance-none w-6 h-6 border-2 outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
                                                     />
-                                                    {popupTheir.visible && (
-                                                        <Popup
-                                                            onClose={() =>
-                                                                setPopupTheir({
-                                                                    visible:
-                                                                        false,
-                                                                    index: 0,
-                                                                })
-                                                            }
-                                                            togglePaidByLocator={() =>
-                                                                togglePaidByLocator(
-                                                                    popupTheir.index,
-                                                                    true
-                                                                )
-                                                            }
-                                                            currValue={
-                                                                invoice.paidByLocator
-                                                            }
-                                                        ></Popup>
-                                                    )}
+                                                    {popupTheir.index ===
+                                                        index &&
+                                                        popupTheir.visible ===
+                                                            true && (
+                                                            <Popup
+                                                                onClose={() =>
+                                                                    setPopupTheir(
+                                                                        {
+                                                                            visible:
+                                                                                false,
+                                                                            index: 0,
+                                                                        }
+                                                                    )
+                                                                }
+                                                                togglePaidByLocator={() =>
+                                                                    togglePaidByLocator(
+                                                                        popupTheir.index,
+                                                                        true
+                                                                    )
+                                                                }
+                                                                currValue={
+                                                                    invoice.paidByLocator
+                                                                }
+                                                            ></Popup>
+                                                        )}
                                                 </>
                                             }
                                         />
@@ -187,27 +192,29 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                         }}
                                                         className={`appearance-none w-6 h-6 border-2  outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
                                                     />
-                                                    {popupMe.visible && (
-                                                        <Popup
-                                                            onClose={() =>
-                                                                setPopupMe({
-                                                                    visible:
-                                                                        false,
+                                                    {popupMe.index === index &&
+                                                        popupMe.visible ===
+                                                            true && (
+                                                            <Popup
+                                                                onClose={() =>
+                                                                    setPopupMe({
+                                                                        visible:
+                                                                            false,
 
-                                                                    index: 0,
-                                                                })
-                                                            }
-                                                            togglePaidByLocator={() =>
-                                                                togglePaidByLocator(
-                                                                    popupMe.index,
-                                                                    false
-                                                                )
-                                                            }
-                                                            currValue={
-                                                                invoice.paidByMe
-                                                            }
-                                                        ></Popup>
-                                                    )}
+                                                                        index: 0,
+                                                                    })
+                                                                }
+                                                                togglePaidByLocator={() =>
+                                                                    togglePaidByLocator(
+                                                                        popupMe.index,
+                                                                        false
+                                                                    )
+                                                                }
+                                                                currValue={
+                                                                    invoice.paidByMe
+                                                                }
+                                                            ></Popup>
+                                                        )}
                                                 </>
                                             }
                                         />
@@ -223,7 +230,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                             <img
                                 src={PlusIcon}
                                 alt=""
-                                className="w-20 cursor-pointer"
+                                className="w-10 lg:w-20 cursor-pointer"
                                 onClick={() => {
                                     setAddInvoicePopoup(true);
                                 }}
