@@ -18,6 +18,10 @@ const port = process.env.PORT || 8000;
 app.use(express.json()); // for parsing application/json
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.listen(port, () => {
+    console.log(`Server is Fire at http://localhost:${port}`);
+});
+
 app.get("/", (req: Request, res: Response) => {
     return res.json({ message: "api works" });
 });
@@ -25,10 +29,6 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/auth", require("./routes/authRouter"));
 app.use("/api/invoice", require("./routes/invoiceRouter"));
 app.use("/api/apartment", require("./routes/apartmentRouter"));
-
-app.listen(port, () => {
-    console.log(`Server is Fire at http://localhost:${port}`);
-});
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(currentDirectory, "frontend", "dist", "index.html"));
