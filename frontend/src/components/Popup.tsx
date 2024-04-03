@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { useEffect } from "react";
+
 interface PopupProps {
     onClose: () => void;
     togglePaidByLocator: () => void;

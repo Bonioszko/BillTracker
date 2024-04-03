@@ -1,4 +1,4 @@
-import { useState, useContext, ClassAttributes } from "react";
+import { useContext } from "react";
 import { UserContextType, UserContext } from "../context/UserContext";
 import { useTranslation } from "react-i18next";
 interface LogoutProps {
@@ -6,7 +6,7 @@ interface LogoutProps {
 }
 
 export default function Logout({ className }: LogoutProps) {
-    const { user, setUser } = useContext(UserContext) as UserContextType;
+    const { setUser } = useContext(UserContext) as UserContextType;
     const { t } = useTranslation();
     const handleLogout = async () => {
         // Make a request to your server's logout endpoint

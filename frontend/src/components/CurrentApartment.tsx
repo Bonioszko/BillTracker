@@ -26,11 +26,11 @@ const categoryIcons = new Map([
     ["Cooperative", cooperative],
 ]);
 const CurrentApartment: React.FC<CurrentApartmentProps> = ({
-    name,
-    description,
-    locator,
+    // name,
+    // description,
+    // locator,
     invoices,
-    owner,
+    // owner,
     _id,
     active,
     setRefresh,
