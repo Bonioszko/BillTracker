@@ -1,9 +1,9 @@
-import express, { Express, Request, Response, Application } from "express";
+import { Request, Response, Application } from "express";
 import dotenv from "dotenv";
 const mongoose = require("mongoose");
+const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
-import User from "./models/user";
 
 //For env File
 dotenv.config();
