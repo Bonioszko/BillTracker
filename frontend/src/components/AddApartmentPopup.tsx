@@ -18,7 +18,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
     refresh,
 }) => {
     const { t } = useTranslation();
-    const { user, setUser } = useContext(UserContext) as UserContextType;
+    const { user } = useContext(UserContext) as UserContextType;
     const [errors, setErrors] = useState<Errors>({});
     const [formData, setFormData] = useState({
         name: "",
@@ -59,7 +59,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                 body: JSON.stringify({ name, description, locator }),
             });
             if (response.ok) {
-                const data = await response.json();
+                // const data = await response.json();
                 toast.success("Dodano apartament");
                 setTimeout(() => {
                     onClose();

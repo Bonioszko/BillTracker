@@ -1,7 +1,7 @@
 import { UserContext, UserContextType } from "../context/UserContext.js";
 
 import { useContext, useEffect, useState } from "react";
-import Logout from "../components/Logout.js";
+
 import Layout from "../components/Layouts/Layout.js";
 import { Apartment } from "./InvoicesPage.js";
 import { useTranslation } from "react-i18next";
@@ -16,7 +16,7 @@ type Summary = {
     difference: number;
 };
 function Profile() {
-    const { user, setUser } = useContext(UserContext) as UserContextType;
+    const { user } = useContext(UserContext) as UserContextType;
     const { t } = useTranslation();
     const [apartments, setApartments] = useState<Apartment[]>();
     const [summary, setSummary] = useState<Summary>();

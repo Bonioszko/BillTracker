@@ -10,13 +10,6 @@ export default function LocaleSwitcher() {
     }));
     const defaultOption =
         options.find((option) => option.value === i18n.language) || options[0];
-    const customStyles = {
-        control: (provided) => ({
-            ...provided,
-            width: 120,
-            minWidth: 100, // Change this to your desired minimum width
-        }),
-    };
     const handleChange = (
         selectedOption: { value: string; label: string } | null
     ) => {
@@ -31,7 +24,13 @@ export default function LocaleSwitcher() {
                     onChange={handleChange}
                     options={options}
                     defaultValue={defaultOption}
-                    styles={customStyles}
+                    styles={{
+                        control: (provided) => ({
+                            ...provided,
+                            width: 120,
+                            minWidth: 100,
+                        }),
+                    }}
                 />
                 {/* <select
                     value={i18n.resolvedLanguage}

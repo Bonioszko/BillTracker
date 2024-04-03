@@ -37,12 +37,11 @@ function InvoicesPage() {
     const toggleRefresh = () => {
         setRefresh(!refresh);
     };
-    const [isLoading, setIsLoading] = useState(true); // Add this line
+    // const [isLoading, setIsLoading] = useState(true); // Add this line
 
     useEffect(() => {
         const fetchData = async () => {
             if (user) {
-                setIsLoading(true);
                 const invoiceResponse = await fetch(`/api/invoice/${user._id}`);
                 const invoiceData = await invoiceResponse.json();
                 let invoices: Invoice[] = [];
@@ -75,7 +74,6 @@ function InvoicesPage() {
 
                     setApartments(apartmentsWithInvoices);
                 }
-                setIsLoading(false);
             }
         };
 

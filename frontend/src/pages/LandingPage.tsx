@@ -2,9 +2,8 @@ import { Link } from "react-router-dom";
 import Icon from "../../public/iconBills.svg";
 import X from "../../public/X.svg";
 import Yes from "../../public/Yes.svg";
-import { useTranslation } from "react-i18next";
+
 function LandingPage() {
-    const { t } = useTranslation();
     return (
         <div className="w-full h-screen bg-background-color  flex flex-col items-start px-20 py-5 gap-20">
             <div className="w-full flex justify-between items-center">
