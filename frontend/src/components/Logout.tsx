@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { UserContextType, UserContext } from "../context/UserContext";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
 interface LogoutProps {
     className?: string;
 }
@@ -19,6 +20,7 @@ export default function Logout({ className }: LogoutProps) {
             setUser(null);
             document.cookie =
                 "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            toast.success("You are logged out");
         } else {
             // Handle any errors
             console.error("Logout failed");

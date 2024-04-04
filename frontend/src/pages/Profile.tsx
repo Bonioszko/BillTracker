@@ -49,15 +49,15 @@ function Profile() {
     return (
         <Layout>
             {user ? (
-                <div className="w-1/2 flex flex-col gap-5 justify-center items-center">
+                <div className="lg:w-1/2 flex flex-col gap-5 justify-center items-center animate-fadeIn">
                     {" "}
-                    <h1 className="text-5xl font-bold pb-8">
+                    <h1 className="text-5xl font-bold pb-8 text-center">
                         {t("profile_page")}
                     </h1>
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
                         {" "}
-                        <div className="text-2xl font-bold">
-                            {user.name}asdasdasdasdasd asdasd
+                        <div className="text-2xl font-bold text-center">
+                            {user.name}
                         </div>
                         <div className="flex  flex-col grow border-4 border-secondary-color p-2">
                             {" "}
@@ -81,7 +81,7 @@ function Profile() {
                                 </span>
                                 {summary?.totalAmountToPay}
                             </div>
-                            <div border-b-2>
+                            <div className="border-b-2">
                                 <div className=" ">
                                     {" "}
                                     <span className="font-bold">
@@ -90,12 +90,21 @@ function Profile() {
                                     {summary?.totalAmountToReceive}
                                 </div>
                             </div>
+                            <div border-b-2>
+                                <div className=" ">
+                                    {" "}
+                                    <span className="font-bold">
+                                        {t("amount_to_be_paid")}
+                                    </span>
+                                    {summary?.difference}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <h1 className="text-2xl font-bold text-center">
                         Your apartments:
                     </h1>
-                    <div className="grid grid-cols-apartments-grid  gap-5 w-full p-2 ">
+                    <div className="grid grid-cols-apartments-grid  gap-5 w-full p-10 ">
                         {apartments?.map((apartment) => (
                             <ApartmentCard
                                 name={apartment.name}

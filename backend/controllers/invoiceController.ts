@@ -122,7 +122,7 @@ const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
     const apartmentIds = apartments.map(
         (apartment: ApartmentType) => apartment._id
     );
-    console.log(apartments);
+
     // const apartmentIds = apartments.map(apartment => apartment._id);
     let summary: Summary = {
         _id: null,

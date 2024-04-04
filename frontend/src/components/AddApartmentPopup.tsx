@@ -1,7 +1,7 @@
 import ErrorForm from "./ErrorForm";
 import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../context/UserContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 interface AddApartmentPopoupProps {
@@ -78,7 +78,8 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
             style={{ backgroundColor: "rgba(107, 114, 128, 0.45)" }}
         >
             {" "}
-            <div className="w-11/12 lg:w-1/2 sm:h-1/2 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20">
+            <div className="w-11/12 lg:w-1/2 sm:h-2/3 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20 animate-slideInFromBottom border-2 border-text-color">
+                <h1 className="text-2xl font-bold">{t("add_apartment")}</h1>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div className="flex flex-col">
                         {" "}
@@ -136,7 +137,7 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                             {" "}
                             <label htmlFor="locator">{t("locator")}</label>{" "}
                             {errors.locator && (
-                                <ErrorForm text="Podaj lokatora"></ErrorForm>
+                                <ErrorForm text={t("give_locator")}></ErrorForm>
                             )}
                         </div>
                         <input
@@ -169,7 +170,6 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                     </div>
                 </form>
             </div>
-            <ToastContainer></ToastContainer>
         </div>
     );
 };

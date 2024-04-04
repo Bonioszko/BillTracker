@@ -15,10 +15,10 @@ const Popup: React.FC<PopupProps> = ({
 
     return (
         <div
-            className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center transition-none"
+            className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center transition-none  "
             style={{ backgroundColor: "rgba(107, 114, 128, 0.45)" }}
         >
-            <div className="w-11/12 lg:w-1/2 h-1/2 bg-secondary-color rounded-lg flex flex-col justify-between items-center  p-20 border-2 border-text-color">
+            <div className="w-11/12 lg:w-1/2 h-1/2 bg-secondary-color rounded-lg flex flex-col justify-between items-center  p-20 border-2 border-text-color animate-slideInFromBottom">
                 <h1 className="text-xl font-bold">
                     {t("are_you_sure")}
                     <span className="font-extrabold">

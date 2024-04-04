@@ -8,6 +8,8 @@ import NotFoundPage from "./pages/NotFoundPage.tsx";
 import SignIn from "./pages/SignInPage.tsx";
 import Login from "./pages/LoginPage.tsx";
 import Profile from "./pages/Profile.tsx";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./i18n/config.ts";
 import UserContextProvider from "./context/UserContext.tsx";
 const router = createBrowserRouter([
@@ -37,6 +39,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <UserContextProvider>
+            <ToastContainer />
             <RouterProvider router={router}></RouterProvider>
         </UserContextProvider>
     </React.StrictMode>

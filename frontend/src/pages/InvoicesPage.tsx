@@ -83,8 +83,8 @@ function InvoicesPage() {
         <Layout>
             {user ? (
                 <>
-                    <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-evenly items-center rounded-lg">
-                        <div className="overflow-x-auto flex items-center gap-2 px-2 lg:px-10">
+                    <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-evenly items-center rounded-lg  ">
+                        <div className="overflow-x-auto flex items-center gap-2 px-2 lg:px-10 ">
                             {apartments &&
                                 apartments.map((apartment, index) => (
                                     <div
@@ -114,7 +114,7 @@ function InvoicesPage() {
                             )}
                         </div>
                     </div>
-                    <div className="h-5/6 bg-secondary-color w-11/12 lg:w-10/12  rounded-lg">
+                    <div className="h-5/6 bg-secondary-color w-11/12 lg:w-10/12  rounded-lg animate-slideInFromBottom ">
                         {apartments &&
                             apartments.map((apartment, index) => (
                                 <CurrentApartment

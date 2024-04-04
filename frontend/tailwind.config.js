@@ -17,17 +17,36 @@ export default {
                 "test-color": "var(--test-color)",
             },
             animation: {
-                slideInFromLeft: "slideInFromLeft 1s ease",
+                slideInFromBottom: "slideInFromBottom 0.5s ease",
+                slideInFromTop: "slideInFromTop 0.5s ease",
+                fadeIn: "fadeIn 2s ease-in-out",
             },
             keyframes: {
-                slideInFromLeft: {
+                slideInFromBottom: {
                     "0%": {
-                        transform: " translateY(20%)",
+                        transform: "translateY(20%)",
                         opacity: "0",
                     },
-
                     "100%": {
                         transform: "translateY(0)",
+                        opacity: "1",
+                    },
+                },
+                slideInFromTop: {
+                    "0%": {
+                        transform: "translateY(-20%)",
+                        opacity: "0",
+                    },
+                    "100%": {
+                        transform: "translateY(0)",
+                        opacity: "1",
+                    },
+                },
+                fadeIn: {
+                    "0%": {
+                        opacity: "0",
+                    },
+                    "100%": {
                         opacity: "1",
                     },
                 },

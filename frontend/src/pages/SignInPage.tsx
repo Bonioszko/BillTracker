@@ -80,13 +80,13 @@ function SignIn() {
     };
     return (
         <Layout>
-            <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-5 sm:gap-10 p-5 sm:p-14 items-center rounded-lg">
+            <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-5 sm:gap-10 p-5  sm:p-14 items-center rounded-lg ">
                 <h2 className="text-3xl font-bold text-center">
                     {t("sign_in")}
                 </h2>
                 <form
                     onSubmit={handleSubmit}
-                    className="flex flex-col justify-between h-3/5 sm:w-1/2 max-w-2xl bg-background-color p-5 rounded-lg gap-5"
+                    className="flex flex-col justify-between h-3/5 sm:w-1/2 max-w-2xl bg-background-color p-5 rounded-lg gap-5 animate-slideInFromBottom"
                 >
                     <div className="flex flex-col gap-1">
                         <div className="flex justify-between items-center">
@@ -109,7 +109,7 @@ function SignIn() {
                                     name: e.target.value,
                                 })
                             }
-                            className="p-2 rounded-xl border-2 border-black"
+                            className="p-2 rounded-xl border-2 border-black focus:outline-none focus:border-secondary-color"
                         />
                     </div>
                     <div className="flex flex-col gap-1">
@@ -133,7 +133,7 @@ function SignIn() {
                                     email: e.target.value,
                                 })
                             }
-                            className="p-2 rounded-xl border-2 border-black"
+                            className="p-2 rounded-xl border-2 border-black focus:outline-none focus:border-secondary-color"
                         />
                     </div>
                     <div className="flex flex-col gap-1 ">
@@ -157,12 +157,12 @@ function SignIn() {
                                     password: e.target.value,
                                 })
                             }
-                            className="p-2 rounded-xl border-2 border-black"
+                            className="p-2 rounded-xl border-2 border-black focus:outline-none focus:border-secondary-color"
                         />
                     </div>
                     <button
                         type="submit"
-                        className="bg-background-color p-2 rounded-lg border-2 border-cyan-500 hover:bg-secondary-color "
+                        className="bg-background-color p-2 rounded-lg border-2 border-text-color hover:bg-secondary-color hover:text-text-color transition-colors duration-300 ease-in-out"
                     >
                         {" "}
                         submit

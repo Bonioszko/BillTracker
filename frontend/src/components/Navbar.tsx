@@ -49,39 +49,43 @@ export default function Navbar() {
                     )}
                 </div>
                 {(isOpen || !isMobile) && (
-                    <div className="flex flex-col sm:flex-row gap-2 lg:gap-5 items-center justify-center">
+                    <div
+                        className={`flex flex-col sm:flex-row gap-2 lg:gap-5 items-center justify-center ${
+                            isOpen ? "animate-slideInFromTop" : ""
+                        }`}
+                    >
                         {user ? (
-                            <Logout className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color text-center hover:text-background-color"></Logout>
+                            <Logout className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color text-center hover:text-background-color"></Logout>
                         ) : (
                             <Link
                                 to="/login"
-                                className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color text-center hover:text-background-color"
+                                className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color text-center hover:text-background-color"
                             >
                                 {t("login")}
                             </Link>
                         )}
                         <Link
                             to="/signin"
-                            className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
+                            className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color hover:text-background-color text-center"
                         >
                             {t("sign_in")}
                         </Link>
 
                         <Link
                             to="/"
-                            className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
+                            className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color hover:text-background-color"
                         >
                             {t("home")}
                         </Link>
                         <Link
                             to="/profile"
-                            className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
+                            className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color hover:text-background-color"
                         >
                             {t("profile")}
                         </Link>
                         <Link
                             to="/main"
-                            className="lg:text-xl font-bold rounded-lg p-2 hover:bg-secondary-color hover:text-background-color"
+                            className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color hover:text-background-color"
                         >
                             {t("invoices")}
                         </Link>

@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import "react-toastify/dist/ReactToastify.css";
+
 import { UserContextType, UserContext } from "../context/UserContext";
 import Layout from "../components/Layouts/Layout";
 import ErrorForm from "../components/ErrorForm";
@@ -59,10 +59,8 @@ function Login() {
                     toast.success(responseData.error);
                 } else {
                     setUser(responseData);
+                    navigate("/main");
                     toast.success(t("logged_in_popup") + responseData.name);
-                    setTimeout(() => {
-                        navigate("/main");
-                    }, 1000);
                 }
             } catch (err) {
                 console.log(err);
@@ -71,13 +69,13 @@ function Login() {
     };
     return (
         <Layout>
-            <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-5 sm:gap-10 p-14 items-center rounded-lg">
+            <div className="w-10/12 h-4/5 bg-secondary-color flex flex-col justify-center gap-5 sm:gap-10 p-14 items-center rounded-lg ">
                 {!user ? (
                     <>
                         <h2 className="text-3xl font-bold">Login</h2>
                         <form
                             onSubmit={handleSubmit}
-                            className="flex flex-col justify-between h-2/5 sm:w-1/2 max-w-2xl gap-5 bg-background-color p-5 rounded-lg"
+                            className="flex flex-col justify-between h-2/5 sm:w-1/2 max-w-2xl gap-5 bg-background-color p-5 rounded-lg animate-slideInFromBottom"
                         >
                             <div className="flex flex-col gap-1">
                                 <div className="flex justify-between items-center">
@@ -104,7 +102,7 @@ function Login() {
                                             email: e.target.value,
                                         })
                                     }
-                                    className="p-2 rounded-xl border-2 border-black"
+                                    className="p-2 rounded-xl border-2 border-black focus:outline-none focus:border-secondary-color "
                                 />
                             </div>
                             <div className="flex flex-col gap-1 ">
@@ -133,12 +131,12 @@ function Login() {
                                             password: e.target.value,
                                         })
                                     }
-                                    className="p-2 rounded-xl border-2 border-black"
+                                    className="p-2 rounded-xl border-2 border-black focus:outline-none focus:border-secondary-color"
                                 />
                             </div>
                             <button
                                 type="submit"
-                                className="bg-background-color p-2 rounded-lg border-2 border-cyan-500 hover:bg-secondary-color"
+                                className="bg-background-color p-2 rounded-lg border-2 border-text-color hover:bg-secondary-color hover:text-text-color transition-colors duration-300 ease-in-out"
                             >
                                 {" "}
                                 {t("submit")}
@@ -146,10 +144,10 @@ function Login() {
                         </form>
                     </>
                 ) : (
-                    <div>{t("logged_in")}</div>
+                    <div className="text-3xl font-bold">{t("logged_in")}</div>
                 )}
             </div>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </Layout>
     );
 }

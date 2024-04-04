@@ -72,7 +72,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     return (
         <>
             {active ? (
-                <div className="flex flex-col items-center gap-4 p-5 ">
+                <div className="flex flex-col items-center gap-4 p-5 animate-slideInFromBottom ">
                     {/* <div className="sm:w-1/2 flex justify-between sm:px-6">
                         {" "}
                         <h1 className="text-2xl font-semibold">{name}</h1>
@@ -113,10 +113,10 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                             <TitleInvoices title={t("I")}></TitleInvoices>
                         </div>
                         <div className="w-full bg-white h-1"></div>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1  ">
                             {currentInvoices.length > 0 ? (
                                 currentInvoices.map((invoice, index) => (
-                                    <div className="flex gap-1">
+                                    <div className="flex gap-1 animate-slideInFromTop">
                                         {/* <Cell content={invoice.name} /> */}
                                         <Cell content={invoice.amount} />
                                         <Cell

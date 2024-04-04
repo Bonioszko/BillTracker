@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../context/UserContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import ErrorForm from "./ErrorForm";
 import { useTranslation } from "react-i18next";
-import "react-toastify/dist/ReactToastify.css";
+
 interface AddInvoicePopupProps {
     onClose: () => void;
     category: string;
@@ -73,12 +73,12 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
             });
             if (response.ok) {
                 // const data = await response.json();
-                toast.success("Dodano fakturę");
+                toast.success(t("invoice_added"));
                 onClose();
                 refresh();
             } else {
                 console.log("Error:", response.status, response.statusText);
-                toast.error("Nie dodano faktury");
+                toast.error(t("invoice_not_added"));
             }
         }
     };
@@ -87,7 +87,7 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
             className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center transition-none"
             style={{ backgroundColor: "rgba(107, 114, 128, 0.45)" }}
         >
-            <div className="w-11/12 lg:w-1/2 sm:h-1/2 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20">
+            <div className="w-11/12 lg:w-1/2 sm:h-2/3 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20 animate-slideInFromBottom border-2 border-text-color">
                 <h1 className="text-xl">
                     {t("add_invoice")}
                     <span className="font-bold"> {category}</span>
@@ -186,7 +186,6 @@ const AddInvoicePopup: React.FC<AddInvoicePopupProps> = ({
                     </div>
                 </form>
             </div>
-            <ToastContainer></ToastContainer>
         </div>
     );
 };
