@@ -4,7 +4,7 @@ import AddApartmentPopoup from "../components/AddApartmentPopup";
 import { UserContextType, UserContext } from "../context/UserContext";
 import PlusIcon from "../../public/plus.svg";
 import Layout from "../components/Layouts/Layout";
-import { useTranslation } from "react-i18next";
+
 export const Categories = ["Rent", "Water", "Electricity", "Cooperative"];
 
 export type Category = (typeof Categories)[number];
@@ -32,7 +32,7 @@ function InvoicesPage() {
     const { user } = useContext(UserContext) as UserContextType;
     const [apartments, setApartments] = useState<Apartment[]>([]);
     const [activeApartment, setActiveApartment] = useState(0);
-    const { t } = useTranslation();
+
     const [refresh, setRefresh] = useState(false);
     const [addApartmentPopupBool, setAddApartmentPopupBool] = useState(false);
     const toggleRefresh = () => {
@@ -85,13 +85,13 @@ function InvoicesPage() {
             {user ? (
                 <>
                     <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-center items-center rounded-lg  ">
-                        <div className="overflow-x-auto flex items-center gap-5  px-2 lg:px-10 ">
+                        <div className="overflow-x-auto flex items-center gap-5  px-2 lg:px-10 h-28 ">
                             {apartments.length > 0 ? (
                                 apartments.map((apartment, index) => (
                                     <div
                                         className={`lg:text-2xl font-bold p-2 rounded-lg cursor-pointer max-w-96 text-center ${
                                             index === activeApartment
-                                                ? "bg-primary-color text-black"
+                                                ? "bg-primary-color text-black transition-colors duration-500 ease-in-out"
                                                 : "text-text-color"
                                         }`}
                                         onClick={() =>
@@ -121,14 +121,15 @@ function InvoicesPage() {
                         </div>
                     </div>
                     <div className="h-5/6 bg-secondary-color w-11/12 lg:w-10/12  rounded-lg animate-slideInFromBottom ">
-                        <div className="text-center  pt-4 flex flex-col">
+                        {/* <div className="text-center  pt-4 flex flex-col">
                             <span className="text-3xl font-extrabold text-text-color">
                                 {t("invoices")}
                             </span>
                             <span className="text-xl">
                                 {apartments[activeApartment]?.name}
                             </span>
-                        </div>
+                        </div> */}
+
                         {apartments &&
                             apartments.map((apartment, index) => (
                                 <CurrentApartment

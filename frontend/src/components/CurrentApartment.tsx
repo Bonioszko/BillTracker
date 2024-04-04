@@ -8,9 +8,12 @@ import electricity from "../../public/electricity.svg";
 import cooperative from "../../public/house.svg";
 import Popup from "./Popup";
 import PlusIcon from "../../public/plus.svg";
+import Bell from "../../public/bell.svg";
 import AddInvoicePopup from "./AddInvoicePopup";
-
+import PopupEmail from "./PopupEmail";
 import { useTranslation } from "react-i18next";
+import { text } from "express";
+import { pipeline } from "nodemailer/lib/xoauth2";
 interface CurrentApartmentProps extends Apartment {
     active: boolean;
     setRefresh: () => void;
@@ -27,9 +30,9 @@ const categoryIcons = new Map([
     ["Cooperative", cooperative],
 ]);
 const CurrentApartment: React.FC<CurrentApartmentProps> = ({
-    // name,
+    name,
     // description,
-    // tenant,
+    tenant,
     invoices,
     // owner,
     _id,
@@ -43,6 +46,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     const [currentInvoices, setCurrentInvoices] = useState<Invoice[]>([]);
     const [popupMe, setPopupMe] = useState({ visible: false, index: 0 });
     const [popupTheir, setPopupTheir] = useState({ visible: false, index: 0 });
+    const [popupEmail, setPopupEmail] = useState(false);
     const [addInvoicePopup, setAddInvoicePopoup] = useState(false);
 
     useEffect(() => {
@@ -71,14 +75,21 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
         <>
             {active ? (
                 <div className="flex flex-col items-center gap-4 p-5 animate-slideInFromBottom ">
-                    {/* <div className="sm:w-1/2 flex justify-between sm:px-6">
-                        {" "}
-                        <h1 className="text-2xl font-semibold">{name}</h1>
-                        <div className="text-xl"> {description}</div>
-                        <div className="text-xl">
-                            {t("tenant")}: {tenant}
+                    <div className="flex justify-center items-center gap-5">
+                        <div className="text-center  pt-4 flex flex-col">
+                            <span className="text-3xl font-extrabold text-text-color">
+                                {t("invoices")}
+                            </span>
+                            <span className="text-xl">{name}</span>
                         </div>
-                    </div> */}
+                        <div className="">
+                            <img
+                                src={Bell}
+                                className="w-16 hover:scale-105 cursor-pointer"
+                                onClick={() => setPopupEmail(true)}
+                            />
+                        </div>
+                    </div>
 
                     <div className="flex gap-2 lg:gap-10  lg:w-full items-center justify-center">
                         {Categories.map((category, index) => (
@@ -103,6 +114,12 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                         ))}
                     </div>
                     <div className="flex flex-col gap-4">
+                        {popupEmail && (
+                            <PopupEmail
+                                tenant={tenant}
+                                onClose={() => setPopupEmail(false)}
+                            ></PopupEmail>
+                        )}
                         <div className="flex gap-1 justify-center">
                             {/* <TitleInvoices title={t("title")}></TitleInvoices> */}
                             <TitleInvoices title={t("amount")}></TitleInvoices>
