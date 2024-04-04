@@ -4,7 +4,7 @@ import Apartment from "../models/apartment";
 import User from "../models/user";
 
 const createApartment = asyncHandler(async (req: Request, res: Response) => {
-    const { name, description, locator } = req.body;
+    const { name, description, tenant } = req.body;
 
     const { id } = req.params;
     const user = await User.findOne({ _id: id });
@@ -16,7 +16,7 @@ const createApartment = asyncHandler(async (req: Request, res: Response) => {
         name: name,
         description: description,
         owner: user,
-        locator: locator,
+        tenant: tenant,
     });
     const result = await apartment.save();
     res.status(200).json({ message: "Apartment succesfully added" });

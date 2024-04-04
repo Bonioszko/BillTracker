@@ -10,7 +10,7 @@ import ApartmentCard from "../components/ApartmentCard.js";
 type Summary = {
     _id: null;
     toPayByMeCount: number;
-    toPayByLocatorsCount: number;
+    toPayByTenantsCount: number;
     totalAmountToPay: number;
     totalAmountToReceive: number;
     difference: number;
@@ -19,7 +19,14 @@ function Profile() {
     const { user } = useContext(UserContext) as UserContextType;
     const { t } = useTranslation();
     const [apartments, setApartments] = useState<Apartment[]>();
-    const [summary, setSummary] = useState<Summary>();
+    const [summary, setSummary] = useState<Summary>({
+        _id: null,
+        toPayByMeCount: 0,
+        toPayByTenantsCount: 0,
+        totalAmountToPay: 0,
+        totalAmountToReceive: 0,
+        difference: 0,
+    });
     useEffect(() => {
         const FetchApartments = async () => {
             if (user) {
@@ -54,7 +61,7 @@ function Profile() {
                     <h1 className="text-5xl font-bold pb-8 text-center">
                         {t("profile_page")}
                     </h1>
-                    <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
+                    <div className="flex flex-col sm:flex-row justify-center items-center gap-10">
                         {" "}
                         <div className="text-2xl font-bold text-center">
                             {user.name}
@@ -73,7 +80,7 @@ function Profile() {
                                 <span className="font-bold">
                                     {t("invoices_to_be_paid")}
                                 </span>
-                                {summary?.toPayByLocatorsCount}
+                                {summary?.toPayByTenantsCount}
                             </div>{" "}
                             <div className="border-b-2">
                                 <span className="font-bold">
@@ -91,12 +98,20 @@ function Profile() {
                                 </div>
                             </div>
                             <div border-b-2>
-                                <div className=" ">
+                                <div className="">
                                     {" "}
                                     <span className="font-bold">
                                         {t("difference")}
                                     </span>
-                                    {summary?.difference}
+                                    <span
+                                        className={`${
+                                            summary.difference > 0
+                                                ? "bg-green-500"
+                                                : "bg-red-500"
+                                        } px-1 rounded-lg`}
+                                    >
+                                        {summary.difference}
+                                    </span>
                                 </div>
                             </div>
                         </div>
@@ -109,7 +124,7 @@ function Profile() {
                             <ApartmentCard
                                 name={apartment.name}
                                 description={apartment.description}
-                                locator={apartment.locator}
+                                tenant={apartment.tenant}
                             ></ApartmentCard>
                         ))}
                     </div>

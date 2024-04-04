@@ -4,7 +4,7 @@ import AddApartmentPopoup from "../components/AddApartmentPopup";
 import { UserContextType, UserContext } from "../context/UserContext";
 import PlusIcon from "../../public/plus.svg";
 import Layout from "../components/Layouts/Layout";
-
+import { useTranslation } from "react-i18next";
 export const Categories = ["Rent", "Water", "Electricity", "Cooperative"];
 
 export type Category = (typeof Categories)[number];
@@ -16,7 +16,7 @@ export type Invoice = {
     name: string;
     date: Date;
     paidByMe: boolean;
-    paidByLocator: boolean;
+    paidByTenant: boolean;
     _id: string;
 };
 export type Apartment = {
@@ -24,7 +24,7 @@ export type Apartment = {
     _id: string;
     owner: string;
     description: string;
-    locator: string;
+    tenant: string;
     invoices: Invoice[];
 };
 
@@ -32,6 +32,7 @@ function InvoicesPage() {
     const { user } = useContext(UserContext) as UserContextType;
     const [apartments, setApartments] = useState<Apartment[]>([]);
     const [activeApartment, setActiveApartment] = useState(0);
+    const { t } = useTranslation();
     const [refresh, setRefresh] = useState(false);
     const [addApartmentPopupBool, setAddApartmentPopupBool] = useState(false);
     const toggleRefresh = () => {
@@ -120,6 +121,14 @@ function InvoicesPage() {
                         </div>
                     </div>
                     <div className="h-5/6 bg-secondary-color w-11/12 lg:w-10/12  rounded-lg animate-slideInFromBottom ">
+                        <div className="text-center  pt-4 flex flex-col">
+                            <span className="text-3xl font-extrabold text-text-color">
+                                {t("invoices")}
+                            </span>
+                            <span className="text-xl">
+                                {apartments[activeApartment]?.name}
+                            </span>
+                        </div>
                         {apartments &&
                             apartments.map((apartment, index) => (
                                 <CurrentApartment
@@ -127,7 +136,7 @@ function InvoicesPage() {
                                     name={apartment.name}
                                     _id={apartment._id}
                                     description={apartment.description}
-                                    locator={apartment.locator}
+                                    tenant={apartment.tenant}
                                     invoices={apartment.invoices}
                                     owner={apartment.owner}
                                     active={

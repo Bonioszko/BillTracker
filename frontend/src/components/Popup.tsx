@@ -2,13 +2,13 @@ import { useTranslation } from "react-i18next";
 
 interface PopupProps {
     onClose: () => void;
-    togglePaidByLocator: () => void;
+    togglePaidByTenant: () => void;
     currValue: boolean;
 }
 
 const Popup: React.FC<PopupProps> = ({
     onClose,
-    togglePaidByLocator,
+    togglePaidByTenant,
     currValue,
 }) => {
     const { t } = useTranslation();
@@ -31,7 +31,7 @@ const Popup: React.FC<PopupProps> = ({
                     <button
                         className="bg-primary-color p-2 rounded-lg border-2 cursor-pointer  border-black font-bold transform hover:scale-105"
                         onClick={() => {
-                            togglePaidByLocator();
+                            togglePaidByTenant();
                             onClose();
                         }}
                     >

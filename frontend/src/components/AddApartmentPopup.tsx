@@ -11,7 +11,7 @@ interface AddApartmentPopoupProps {
 type Errors = {
     name?: string;
     description?: string;
-    locator?: string;
+    tenant?: string;
 };
 const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
     onClose,
@@ -23,14 +23,14 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
     const [formData, setFormData] = useState({
         name: "",
         description: "",
-        locator: "",
+        tenant: "",
     });
     const validateForm = () => {
         let isValid = true;
         const newErrors = {
             name: "",
             description: "",
-            locator: "",
+            tenant: "",
         };
         if (!formData.name) {
             newErrors.name = "Podaj nazwe";
@@ -40,8 +40,8 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
             newErrors.description = "Podaj opis mieszkania";
             isValid = false;
         }
-        if (!formData.locator) {
-            newErrors.locator = "Podaj lokatora";
+        if (!formData.tenant) {
+            newErrors.tenant = "Podaj lokatora";
             isValid = false;
         }
         setErrors(newErrors);
@@ -50,13 +50,13 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (validateForm()) {
-            const { name, description, locator } = formData;
+            const { name, description, tenant } = formData;
             const response = await fetch(`/api/apartment/${user?._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, description, locator }),
+                body: JSON.stringify({ name, description, tenant }),
             });
             if (response.ok) {
                 // const data = await response.json();
@@ -135,21 +135,21 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                         {" "}
                         <div className="flex flex-col">
                             {" "}
-                            <label htmlFor="locator">{t("locator")}</label>{" "}
-                            {errors.locator && (
-                                <ErrorForm text={t("give_locator")}></ErrorForm>
+                            <label htmlFor="tenant">{t("tenant")}</label>{" "}
+                            {errors.tenant && (
+                                <ErrorForm text={t("give_tenant")}></ErrorForm>
                             )}
                         </div>
                         <input
                             type="text"
-                            id="locator"
-                            name="locator"
+                            id="tenant"
+                            name="tenant"
                             className="p-2 rounded-lg"
-                            value={formData.locator}
+                            value={formData.tenant}
                             onChange={(e) =>
                                 setFormData({
                                     ...formData,
-                                    locator: e.target.value,
+                                    tenant: e.target.value,
                                 })
                             }
                         />

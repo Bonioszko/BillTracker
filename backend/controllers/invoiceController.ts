@@ -68,12 +68,12 @@ const deleteInvoice = asyncHandler(async (req: Request, res: Response) => {
 const changePaymentInvoice = asyncHandler(
     async (req: Request, res: Response) => {
         const { id } = req.params;
-        const { byLocator } = req.body;
+        const { byTenant } = req.body;
 
         const invoice = await Invoice.findById(id);
         if (invoice) {
             let updatedInvoice;
-            if (!byLocator) {
+            if (!byTenant) {
                 updatedInvoice = await Invoice.findByIdAndUpdate(
                     id,
                     {
@@ -85,7 +85,7 @@ const changePaymentInvoice = asyncHandler(
                 updatedInvoice = await Invoice.findByIdAndUpdate(
                     id,
                     {
-                        paidByLocator: !invoice.paidByLocator,
+                        paidByTenant: !invoice.paidByTenant,
                     },
                     { new: true }
                 );
@@ -106,7 +106,7 @@ const changePaymentInvoice = asyncHandler(
 type Summary = {
     _id: null;
     toPayByMeCount: number;
-    toPayByLocatorsCount: number;
+    toPayByTenantsCount: number;
     totalAmountToPay: number;
     totalAmountToReceive: number;
     difference: number;
@@ -127,7 +127,7 @@ const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
     let summary: Summary = {
         _id: null,
         toPayByMeCount: 0,
-        toPayByLocatorsCount: 0,
+        toPayByTenantsCount: 0,
         totalAmountToPay: 0,
         totalAmountToReceive: 0,
         difference: 0,
@@ -140,8 +140,8 @@ const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
                 toPayByMeCount: {
                     $sum: { $cond: [{ $eq: ["$paidByMe", false] }, 1, 0] },
                 },
-                toPayByLocatorsCount: {
-                    $sum: { $cond: [{ $eq: ["$paidByLocator", false] }, 1, 0] },
+                toPayByTenantsCount: {
+                    $sum: { $cond: [{ $eq: ["$paidByTenant", false] }, 1, 0] },
                 },
                 totalAmountToPay: {
                     $sum: {
@@ -151,7 +151,7 @@ const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
                 totalAmountToReceive: {
                     $sum: {
                         $cond: [
-                            { $eq: ["$paidByLocator", false] },
+                            { $eq: ["$paidByTenant", false] },
                             "$amount",
                             0,
                         ],

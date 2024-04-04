@@ -2,12 +2,12 @@ import { useTranslation } from "react-i18next";
 interface ApartmentCardProps {
     name: string;
     description: string;
-    locator: string;
+    tenant: string;
 }
 const ApartmentCard: React.FC<ApartmentCardProps> = ({
     name,
     description,
-    locator,
+    tenant,
 }) => {
     const { t } = useTranslation();
     return (
@@ -19,7 +19,7 @@ const ApartmentCard: React.FC<ApartmentCardProps> = ({
             <div>{description}</div>
             <div>
                 {" "}
-                {t("locator")} : {locator}
+                {t("tenant")} : {tenant}
             </div>
         </div>
     );

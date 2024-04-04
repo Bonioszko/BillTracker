@@ -9,6 +9,7 @@ import cooperative from "../../public/house.svg";
 import Popup from "./Popup";
 import PlusIcon from "../../public/plus.svg";
 import AddInvoicePopup from "./AddInvoicePopup";
+
 import { useTranslation } from "react-i18next";
 interface CurrentApartmentProps extends Apartment {
     active: boolean;
@@ -28,7 +29,7 @@ const categoryIcons = new Map([
 const CurrentApartment: React.FC<CurrentApartmentProps> = ({
     // name,
     // description,
-    // locator,
+    // tenant,
     invoices,
     // owner,
     _id,
@@ -51,17 +52,14 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
 
         setCurrentInvoices(filteredInvoices);
     }, [currentCategory, invoices, refresh]);
-    const togglePaidByLocator = async (
-        index: number,
-        paidByLocator: boolean
-    ) => {
+    const togglePaidByTenant = async (index: number, paidByTenant: boolean) => {
         const id = currentInvoices[index]._id;
         const response = await fetch(`/api/invoice/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ byLocator: paidByLocator }),
+            body: JSON.stringify({ byTenant: paidByTenant }),
         });
         if (response.ok) {
             setRefresh();
@@ -78,7 +76,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                         <h1 className="text-2xl font-semibold">{name}</h1>
                         <div className="text-xl"> {description}</div>
                         <div className="text-xl">
-                            {t("locator")}: {locator}
+                            {t("tenant")}: {tenant}
                         </div>
                     </div> */}
 
@@ -118,6 +116,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                 currentInvoices.map((invoice, index) => (
                                     <div className="flex gap-1 animate-slideInFromTop">
                                         {/* <Cell content={invoice.name} /> */}
+
                                         <Cell content={invoice.amount} />
                                         <Cell
                                             content={invoice.date.toLocaleDateString(
@@ -135,7 +134,7 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                     <input
                                                         type="checkbox"
                                                         checked={
-                                                            invoice.paidByLocator
+                                                            invoice.paidByTenant
                                                         }
                                                         onChange={() => {
                                                             setPopupTheir({
@@ -160,14 +159,14 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                                         }
                                                                     )
                                                                 }
-                                                                togglePaidByLocator={() =>
-                                                                    togglePaidByLocator(
+                                                                togglePaidByTenant={() =>
+                                                                    togglePaidByTenant(
                                                                         popupTheir.index,
                                                                         true
                                                                     )
                                                                 }
                                                                 currValue={
-                                                                    invoice.paidByLocator
+                                                                    invoice.paidByTenant
                                                                 }
                                                             ></Popup>
                                                         )}
@@ -204,8 +203,8 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                                                                         index: 0,
                                                                     })
                                                                 }
-                                                                togglePaidByLocator={() =>
-                                                                    togglePaidByLocator(
+                                                                togglePaidByTenant={() =>
+                                                                    togglePaidByTenant(
                                                                         popupMe.index,
                                                                         false
                                                                     )

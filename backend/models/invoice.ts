@@ -12,6 +12,6 @@ const InvoiceSchema = new Schema({
     name: { type: String, required: true },
     date: { type: Date, default: Date.now },
     paidByMe: { type: Boolean, default: false },
-    paidByLocator: { type: Boolean, default: false },
+    paidByTenant: { type: Boolean, default: false },
 });
 export default mongoose.model("Invoice", InvoiceSchema);
