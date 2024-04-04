@@ -30,7 +30,7 @@ export type Apartment = {
 
 function InvoicesPage() {
     const { user } = useContext(UserContext) as UserContextType;
-    const [apartments, setApartments] = useState<Apartment[]>();
+    const [apartments, setApartments] = useState<Apartment[]>([]);
     const [activeApartment, setActiveApartment] = useState(0);
     const [refresh, setRefresh] = useState(false);
     const [addApartmentPopupBool, setAddApartmentPopupBool] = useState(false);
@@ -83,9 +83,9 @@ function InvoicesPage() {
         <Layout>
             {user ? (
                 <>
-                    <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-evenly items-center rounded-lg  ">
-                        <div className="overflow-x-auto flex items-center gap-2 px-2 lg:px-10 ">
-                            {apartments &&
+                    <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-center items-center rounded-lg  ">
+                        <div className="overflow-x-auto flex items-center gap-5  px-2 lg:px-10 ">
+                            {apartments.length > 0 ? (
                                 apartments.map((apartment, index) => (
                                     <div
                                         className={`lg:text-2xl font-bold p-2 rounded-lg cursor-pointer max-w-96 text-center ${
@@ -99,7 +99,12 @@ function InvoicesPage() {
                                     >
                                         {apartment.name}
                                     </div>
-                                ))}
+                                ))
+                            ) : (
+                                <div className="text-xl font-bold">
+                                    Add some apartments
+                                </div>
+                            )}
                         </div>
                         <div className="flex justify-center w-20 lg:w-20">
                             {apartments && (

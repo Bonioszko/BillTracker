@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import ErrorForm from "../components/ErrorForm";
 import Layout from "../components/Layouts/Layout";
@@ -169,7 +169,6 @@ function SignIn() {
                     </button>
                 </form>
             </div>{" "}
-            <ToastContainer />
         </Layout>
     );
 }

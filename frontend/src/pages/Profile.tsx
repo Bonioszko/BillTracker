@@ -94,7 +94,7 @@ function Profile() {
                                 <div className=" ">
                                     {" "}
                                     <span className="font-bold">
-                                        {t("amount_to_be_paid")}
+                                        {t("difference")}
                                     </span>
                                     {summary?.difference}
                                 </div>

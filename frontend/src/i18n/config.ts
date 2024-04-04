@@ -98,7 +98,7 @@ i18n
                     amount_to_be_paid:
                         "Amount that locators need to pay to you: ",
                     profile_page: "Profile page",
-                    difference: "Difference",
+                    difference: "Difference: ",
                     invoice_added: "Invoice added",
                     invoice_not_added: "Invoice do not added",
                     apartment_added: "Apartment added",
@@ -156,7 +156,7 @@ i18n
                     amount_to_be_paid:
                         "Kwota, którą lokatorzy muszą zapłacić Tobie: ",
                     profile_page: "Twój profil",
-                    difference: "Różnica",
+                    difference: "Różnica: ",
                     invoice_added: "Dodano fakturę",
                     invoice_not_added: "Nie dodano faktury",
                     apartment_added: "Dodano mieszkanie",

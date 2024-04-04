@@ -72,12 +72,6 @@ export default function Navbar() {
                         </Link>
 
                         <Link
-                            to="/"
-                            className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color hover:text-background-color"
-                        >
-                            {t("home")}
-                        </Link>
-                        <Link
                             to="/profile"
                             className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color hover:text-background-color"
                         >
@@ -88,6 +82,12 @@ export default function Navbar() {
                             className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color hover:text-background-color"
                         >
                             {t("invoices")}
+                        </Link>
+                        <Link
+                            to="/"
+                            className="lg:text-xl font-bold rounded-lg p-2 transition-colors duration-300 ease-in-out  hover:bg-secondary-color hover:text-background-color"
+                        >
+                            {t("home")}
                         </Link>
                         <LocaleSwitcher></LocaleSwitcher>
                     </div>
