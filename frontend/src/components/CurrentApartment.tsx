@@ -12,8 +12,7 @@ import Bell from "../../public/bell.svg";
 import AddInvoicePopup from "./AddInvoicePopup";
 import PopupEmail from "./PopupEmail";
 import { useTranslation } from "react-i18next";
-import { text } from "express";
-import { pipeline } from "nodemailer/lib/xoauth2";
+
 interface CurrentApartmentProps extends Apartment {
     active: boolean;
     setRefresh: () => void;
