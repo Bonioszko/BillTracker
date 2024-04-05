@@ -56,7 +56,7 @@ function Login() {
                 const responseData = await response.json();
 
                 if (responseData.error) {
-                    toast.success(responseData.error);
+                    toast.error(responseData.error);
                 } else {
                     setUser(responseData);
                     navigate("/main");

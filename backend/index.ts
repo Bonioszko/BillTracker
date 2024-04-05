@@ -29,6 +29,7 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/auth", require("./routes/authRouter"));
 app.use("/api/invoice", require("./routes/invoiceRouter"));
 app.use("/api/apartment", require("./routes/apartmentRouter"));
+app.use("/api/email", require("./routes/emailRouter"));
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(currentDirectory, "frontend", "dist", "index.html"));

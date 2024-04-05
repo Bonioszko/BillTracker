@@ -32,6 +32,9 @@ function SignIn() {
         if (!formData.email) {
             newErrors.email = t("give_email");
             isValid = false;
+        } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+            newErrors.email = "Email is not valid";
+            isValid = false;
         }
         if (!formData.password) {
             newErrors.password = t("give_password");

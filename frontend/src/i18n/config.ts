@@ -103,6 +103,16 @@ i18n
                     invoice_not_added: "Invoice do not added",
                     apartment_added: "Apartment added",
                     apartment_not_added: "Apartment do not added",
+                    give_subject: "Subject required",
+                    give_body: "Body required",
+                    send_email: "Sent reminder via email",
+                    subject: "Email subject",
+                    email_tenant: "Email of tenant",
+                    body_email: "Body of email",
+                    email_sent: "Email sent successfully",
+                    email_not_sent: "Email do not sent",
+                    email_already_sent:
+                        "You already sent email to that tenant in the last 24 hours",
                 },
             },
             // Arabic

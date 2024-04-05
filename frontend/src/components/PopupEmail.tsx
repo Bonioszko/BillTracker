@@ -2,107 +2,114 @@ import ErrorForm from "./ErrorForm";
 import { useContext, useState } from "react";
 import { UserContext, UserContextType } from "../context/UserContext";
 import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
-interface AddApartmentPopoupProps {
+interface PopupEmailProps {
     onClose: () => void;
-    refresh: () => void;
+    tenant: string;
 }
 type Errors = {
-    name?: string;
-    description?: string;
+    subject?: string;
+    body?: string;
     tenant?: string;
 };
-const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
-    onClose,
-    refresh,
-}) => {
+const PopupEmail: React.FC<PopupEmailProps> = ({ onClose, tenant }) => {
     const { t } = useTranslation();
     const { user } = useContext(UserContext) as UserContextType;
     const [errors, setErrors] = useState<Errors>({});
     const [formData, setFormData] = useState({
-        name: "",
-        description: "",
-        tenant: "",
+        subject: "",
+        body: "",
+        tenant: tenant,
     });
-    const validateForm = () => {
-        let isValid = true;
-        const newErrors = {
-            name: "",
-            description: "",
-            tenant: "",
-        };
-        if (!formData.name) {
-            newErrors.name = "Podaj nazwe";
-            isValid = false;
-        }
-        if (!formData.description) {
-            newErrors.description = "Podaj opis mieszkania";
-            isValid = false;
-        }
-        if (!formData.tenant) {
-            newErrors.tenant = "Podaj lokatora";
-            isValid = false;
-        } else if (!/\S+@\S+\.\S+/.test(formData.tenant)) {
-            newErrors.tenant = "Tenant must be an email";
-            isValid = false;
-        }
-        setErrors(newErrors);
-        return isValid;
-    };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const validateForm = () => {
+            let isValid = true;
+            const newErrors = {
+                subject: "",
+                body: "",
+                tenant: "",
+            };
+            if (!formData.subject) {
+                newErrors.subject = t("give_subject");
+                isValid = false;
+            }
+            if (!formData.body) {
+                newErrors.body = t("give_body");
+                isValid = false;
+            }
+            if (!formData.tenant) {
+                newErrors.tenant = t("give_email");
+                isValid = false;
+            }
+            setErrors(newErrors);
+            return isValid;
+        };
         if (validateForm()) {
-            const { name, description, tenant } = formData;
-            const response = await fetch(`/api/apartment/${user?._id}`, {
+            const currentTime = new Date().getTime();
+            const { subject, body, tenant } = formData;
+            const lastEmailSent = localStorage.getItem(
+                `lastEmailSent${tenant}`
+            );
+            if (
+                lastEmailSent &&
+                currentTime - Number(lastEmailSent) < 24 * 60 * 60 * 1000
+            ) {
+                toast.error(t("email_already_sent"));
+                return;
+            }
+            const response = await fetch(`/api/email/${user?._id}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ name, description, tenant }),
+                body: JSON.stringify({
+                    subject,
+                    body,
+                    email: tenant,
+                }),
             });
             if (response.ok) {
                 // const data = await response.json();
-                toast.success(t("apartment_added"));
-                setTimeout(() => {
-                    onClose();
-                    refresh();
-                }, 1000);
+                localStorage.setItem(
+                    `lastEmailSent${tenant}`,
+                    String(currentTime)
+                );
+                toast.success(t("email_sent"));
+                onClose();
             } else {
                 console.log("Error:", response.status, response.statusText);
-                toast.error(t("apartment_not_added"));
+                toast.error(t("email_not_sent"));
             }
         }
     };
-
     return (
         <div
-            className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center transition-none"
+            className="w-screen h-screen fixed top-0 left-0 flex justify-center items-center transition-none  "
             style={{ backgroundColor: "rgba(107, 114, 128, 0.45)" }}
         >
-            {" "}
-            <div className="w-11/12 lg:w-1/2 sm:h-2/3 bg-secondary-color rounded-lg flex flex-col justify-around items-center p-20 animate-slideInFromBottom border-2 border-text-color">
-                <h1 className="text-2xl font-bold">{t("add_apartment")}</h1>
+            <div className="w-11/12 lg:w-1/2 h-3/5 sm:h-1/2 bg-secondary-color rounded-lg flex flex-col justify-between items-center  p-10 border-2 border-text-color animate-slideInFromBottom">
+                <h1 className="text-xl  font-bold">{t("send_email")}</h1>
                 <form onSubmit={handleSubmit} className="flex flex-col gap-5">
                     <div className="flex flex-col">
                         {" "}
                         <div className="flex flex-col">
                             {" "}
-                            <label htmlFor="fname">{t("apartment_name")}</label>
-                            {errors.name && (
-                                <ErrorForm text={t("give_name")}></ErrorForm>
+                            <label htmlFor="fname"> {t("subject")}</label>
+                            {errors.subject && (
+                                <ErrorForm text={errors.subject}></ErrorForm>
                             )}
                         </div>
                         <input
                             type="text"
-                            id="fname"
-                            name="fname"
+                            id="fsubject"
+                            name="fsubject"
                             className="p-2 rounded-lg"
-                            value={formData.name}
+                            value={formData.subject}
                             onChange={(e) =>
                                 setFormData({
                                     ...formData,
-                                    name: e.target.value,
+                                    subject: e.target.value,
                                 })
                             }
                         />
@@ -111,42 +118,18 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                         {" "}
                         <div className="flex flex-col">
                             {" "}
-                            <label htmlFor="description">
-                                {t("apartment_description")}
-                            </label>{" "}
-                            {errors.description && (
-                                <ErrorForm
-                                    text={t("give_description")}
-                                ></ErrorForm>
-                            )}
-                        </div>
-                        <input
-                            type="text"
-                            id="description"
-                            name="description"
-                            className="p-2 rounded-lg"
-                            value={formData.description}
-                            onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    description: e.target.value,
-                                })
-                            }
-                        />
-                    </div>
-                    <div className="flex flex-col">
-                        {" "}
-                        <div className="flex flex-col">
-                            {" "}
-                            <label htmlFor="tenant">{t("tenant")}</label>{" "}
+                            <label htmlFor="ftenant">
+                                {" "}
+                                {t("email_tenant")}
+                            </label>
                             {errors.tenant && (
-                                <ErrorForm text={t("give_tenant")}></ErrorForm>
+                                <ErrorForm text={errors.tenant}></ErrorForm>
                             )}
                         </div>
                         <input
                             type="text"
-                            id="tenant"
-                            name="tenant"
+                            id="ftenant"
+                            name="ftenant"
                             className="p-2 rounded-lg"
                             value={formData.tenant}
                             onChange={(e) =>
@@ -157,6 +140,29 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
                             }
                         />
                     </div>
+                    <div className="flex flex-col">
+                        {" "}
+                        <div className="flex flex-col">
+                            {" "}
+                            <label htmlFor="fbody"> {t("body_email")}</label>
+                            {errors.body && (
+                                <ErrorForm text={errors.body}></ErrorForm>
+                            )}
+                        </div>
+                        <textarea
+                            id="fbody"
+                            name="fbody"
+                            className="p-2 rounded-lg"
+                            value={formData.body}
+                            onChange={(e) =>
+                                setFormData({
+                                    ...formData,
+                                    body: e.target.value,
+                                })
+                            }
+                        />
+                    </div>
+
                     <div className="flex justify-between">
                         {" "}
                         <input
@@ -176,4 +182,4 @@ const AddApartmentPopoup: React.FC<AddApartmentPopoupProps> = ({
         </div>
     );
 };
-export default AddApartmentPopoup;
+export default PopupEmail;
