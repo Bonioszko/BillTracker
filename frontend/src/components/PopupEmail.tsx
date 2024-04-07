@@ -56,6 +56,7 @@ const PopupEmail: React.FC<PopupEmailProps> = ({ onClose, tenant }) => {
                 currentTime - Number(lastEmailSent) < 24 * 60 * 60 * 1000
             ) {
                 toast.error(t("email_already_sent"));
+                onClose();
                 return;
             }
             const response = await fetch(`/api/email/${user?._id}`, {
