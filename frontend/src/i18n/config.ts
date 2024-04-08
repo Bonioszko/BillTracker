@@ -87,7 +87,7 @@ i18n
                     are_you_sure: "Are you sure that you want to ",
                     title: "Title",
                     date: "Date",
-                    me: "Recived",
+                    me: "Received",
                     I: "Paid",
                     logged_in_popup: "You are logged as: ",
 
