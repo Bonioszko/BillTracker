@@ -6,7 +6,7 @@ import mail from "../../public/mail.svg";
 function LandingPage() {
     return (
         <div className="w-full h-screen bg-background-color  flex flex-col items-start py-5 gap-20">
-            <div className="w-full flex justify-between items-center  px-6 sm:px-20">
+            <div className="w-full flex justify-between items-center  px-6 lg:px-20">
                 {" "}
                 <div className="text-xl sm:text-4xl font-bold flex justify-center items-center gap-5">
                     Payment Pal <img src={Icon} className="w-12 sm:w-24"></img>
@@ -74,19 +74,36 @@ function LandingPage() {
                 </div>
                 <div className="flex flex-col lg:flex-row justify-center items-center">
                     <img src={mail} alt="" />
-                    <div className="text-2xl font-bold lg:w-2/5 text-center flex flex-col gap-10">
-                        <div>
-                            You can easily remind your tenants with emails about
-                            their overdue payments{" "}
-                        </div>
-                        <div>
-                            You do not need to worry to who send email with
-                            which payment, our friendly UI will help you with it
-                        </div>
+                    <div className=" font-bold lg:w-2/5 flex flex-col gap-10">
+                        <ul className=" bg-gradient-to-r from-red-400 to-red-700 p-5 rounded-xl text-white  flex flex-col gap-3">
+                            <li>
+                                {" "}
+                                No more problems with sending email to tenants
+                            </li>
+                            <li> Saving</li>
+                        </ul>
                     </div>
                 </div>
-                <div className="w-full text-center bg-gray-500 p-14 ">
+                <div className="w-full text-center bg-gray-500 p-14 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-20 ">
                     Created by Bartosz Pers
+                    <div className="flex flex-col sm:flex-row gap-2 justify-center items-center">
+                        {" "}
+                        <div>Other applications created by me:</div>
+                        <div className="flex flex-col sm:flex-row  gap-6">
+                            <a
+                                href="https://bonioszko.github.io/Portfolio/"
+                                className="p-2 bg-secondary-color rounded-xl w-44"
+                            >
+                                Portfolio
+                            </a>
+                            <a
+                                href="trainingappfull.onrender.com"
+                                className="p-2 bg-secondary-color rounded-xl w-44"
+                            >
+                                TrainingApp
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
