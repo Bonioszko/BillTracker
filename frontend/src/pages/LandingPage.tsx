@@ -3,6 +3,7 @@ import Icon from "../../public/iconBills.svg";
 import X from "../../public/X.svg";
 import Yes from "../../public/Yes.svg";
 import mail from "../../public/mail.svg";
+import exclamation from "../../public/exclamation.svg";
 function LandingPage() {
     return (
         <div className="w-full h-screen bg-background-color  flex flex-col items-start py-5 gap-20">
@@ -49,7 +50,7 @@ function LandingPage() {
                         </div>
                     </div>
                 </div>
-                <div className="flex flex-col justify-center items-center gap-8 bg-primary-color w-full p-7 lg:p-32">
+                <div className="flex flex-col justify-center items-center gap-8 bg-primary-color w-full p-7 lg:p-32 ">
                     <div className="lg:w-2/5  font-bold  text-3xl text-center">
                         Never miss a payment ever again
                     </div>
@@ -72,19 +73,27 @@ function LandingPage() {
                         of your rental payments effortlessly.
                     </div>
                 </div>
-                <div className="flex flex-col lg:flex-row justify-center items-center">
+                <div className="flex flex-col lg:flex-row justify-center items-center m-2">
                     <img src={mail} alt="" />
-                    <div className=" font-bold lg:w-2/5 flex flex-col gap-10">
+                    <div className=" font-bold lg:w-2/5 flex flex-col gap-10 justify-start items-start">
                         <ul className=" bg-gradient-to-r from-red-400 to-red-700 p-5 rounded-xl text-white  flex flex-col gap-3">
-                            <li>
-                                {" "}
-                                No more problems with sending email to tenants
+                            <li className="flex r items-center gap-3">
+                                <img src={exclamation} width="30" alt="" />
+                                No more problems with sending emails to tenants
                             </li>
-                            <li> Saving</li>
+                            <li className="flex items-center gap-3">
+                                <img src={exclamation} width="30" alt="" />
+                                By two clicks remind them about their missing
+                                payments
+                            </li>
+                            <li className="flex r items-center gap-3">
+                                <img src={exclamation} width="30" alt="" />
+                                You will not need to worry about it ever again
+                            </li>
                         </ul>
                     </div>
                 </div>
-                <div className="w-full text-center bg-gray-500 p-14 flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-20 ">
+                <div className="w-full text-center bg-gray-500 p-14 flex flex-col  justify-center items-center gap-3  ">
                     Created by Bartosz Pers
                     <div className="flex flex-col sm:flex-row gap-2 justify-center items-center">
                         {" "}
@@ -92,13 +101,13 @@ function LandingPage() {
                         <div className="flex flex-col sm:flex-row  gap-6">
                             <a
                                 href="https://bonioszko.github.io/Portfolio/"
-                                className="p-2 bg-secondary-color rounded-xl w-44"
+                                className="p-2 pb-0 border-b-2 border-black"
                             >
                                 Portfolio
                             </a>
                             <a
                                 href="trainingappfull.onrender.com"
-                                className="p-2 bg-secondary-color rounded-xl w-44"
+                                className="p-2 pb-0 border-b-2 border-black "
                             >
                                 TrainingApp
                             </a>
