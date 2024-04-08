@@ -85,7 +85,7 @@ function InvoicesPage() {
             {user ? (
                 <>
                     <div className="w-11/12 lg:w-10/12 overflow-x-auto h-30 bg-secondary-color flex justify-center items-center rounded-lg  ">
-                        <div className="overflow-x-auto flex items-center gap-5  px-2 lg:px-10 h-28 ">
+                        <div className="overflow-x-auto flex items-center gap-5  px-2 lg:px-10 h-20 lg:h-28 ">
                             {apartments.length > 0 ? (
                                 apartments.map((apartment, index) => (
                                     <div
