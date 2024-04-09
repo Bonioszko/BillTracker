@@ -129,112 +129,120 @@ const CurrentApartment: React.FC<CurrentApartmentProps> = ({
                         <div className="w-full bg-white h-1"></div>
                         <div className="flex flex-col gap-1  ">
                             {currentInvoices.length > 0 ? (
-                                currentInvoices.map((invoice, index) => (
-                                    <div className="flex gap-1 animate-slideInFromTop">
-                                        {/* <Cell content={invoice.name} /> */}
-
-                                        <Cell content={invoice.amount} />
-                                        <Cell
-                                            content={invoice.date.toLocaleDateString(
-                                                "en-GB",
-                                                {
-                                                    day: "2-digit",
-                                                    month: "2-digit",
-                                                    year: "numeric",
+                                [...currentInvoices]
+                                    .sort(
+                                        (a, b) =>
+                                            a.date.getTime() - b.date.getTime()
+                                    )
+                                    .map((invoice, index) => (
+                                        <div className="flex gap-1 animate-slideInFromTop">
+                                            <Cell content={invoice.amount} />
+                                            <Cell
+                                                content={invoice.date.toLocaleDateString(
+                                                    "en-GB",
+                                                    {
+                                                        day: "2-digit",
+                                                        month: "2-digit",
+                                                        year: "numeric",
+                                                    }
+                                                )}
+                                            />
+                                            <Cell
+                                                content={
+                                                    <>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={
+                                                                invoice.paidByTenant
+                                                            }
+                                                            onChange={() => {
+                                                                setPopupTheir({
+                                                                    visible:
+                                                                        true,
+                                                                    index: index,
+                                                                });
+                                                                setRefresh();
+                                                            }}
+                                                            className={`appearance-none w-6 h-6 border-2 outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
+                                                        />
+                                                        {popupTheir.index ===
+                                                            index &&
+                                                            popupTheir.visible ===
+                                                                true && (
+                                                                <Popup
+                                                                    onClose={() =>
+                                                                        setPopupTheir(
+                                                                            {
+                                                                                visible:
+                                                                                    false,
+                                                                                index: 0,
+                                                                            }
+                                                                        )
+                                                                    }
+                                                                    togglePaidByTenant={() =>
+                                                                        togglePaidByTenant(
+                                                                            popupTheir.index,
+                                                                            true
+                                                                        )
+                                                                    }
+                                                                    currValue={
+                                                                        invoice.paidByTenant
+                                                                    }
+                                                                ></Popup>
+                                                            )}
+                                                    </>
                                                 }
-                                            )}
-                                        />
-                                        <Cell
-                                            content={
-                                                <>
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={
-                                                            invoice.paidByTenant
-                                                        }
-                                                        onChange={() => {
-                                                            setPopupTheir({
-                                                                visible: true,
-                                                                index: index,
-                                                            });
-                                                            setRefresh();
-                                                        }}
-                                                        className={`appearance-none w-6 h-6 border-2 outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
-                                                    />
-                                                    {popupTheir.index ===
-                                                        index &&
-                                                        popupTheir.visible ===
-                                                            true && (
-                                                            <Popup
-                                                                onClose={() =>
-                                                                    setPopupTheir(
-                                                                        {
-                                                                            visible:
-                                                                                false,
-                                                                            index: 0,
-                                                                        }
-                                                                    )
-                                                                }
-                                                                togglePaidByTenant={() =>
-                                                                    togglePaidByTenant(
-                                                                        popupTheir.index,
-                                                                        true
-                                                                    )
-                                                                }
-                                                                currValue={
-                                                                    invoice.paidByTenant
-                                                                }
-                                                            ></Popup>
-                                                        )}
-                                                </>
-                                            }
-                                        />
-                                        <Cell
-                                            content={
-                                                <>
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={
-                                                            invoice.paidByMe
-                                                        }
-                                                        onChange={() => {
-                                                            setPopupMe({
-                                                                visible: true,
-                                                                index: index,
-                                                            });
+                                            />
+                                            <Cell
+                                                content={
+                                                    <>
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={
+                                                                invoice.paidByMe
+                                                            }
+                                                            onChange={() => {
+                                                                setPopupMe({
+                                                                    visible:
+                                                                        true,
+                                                                    index: index,
+                                                                });
 
-                                                            setRefresh();
-                                                        }}
-                                                        className={`appearance-none w-6 h-6 border-2  outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
-                                                    />
-                                                    {popupMe.index === index &&
-                                                        popupMe.visible ===
-                                                            true && (
-                                                            <Popup
-                                                                onClose={() =>
-                                                                    setPopupMe({
-                                                                        visible:
-                                                                            false,
+                                                                setRefresh();
+                                                            }}
+                                                            className={`appearance-none w-6 h-6 border-2  outline-none cursor-pointer bg-red-700 checked:bg-green-800`}
+                                                        />
+                                                        {popupMe.index ===
+                                                            index &&
+                                                            popupMe.visible ===
+                                                                true && (
+                                                                <Popup
+                                                                    onClose={() =>
+                                                                        setPopupMe(
+                                                                            {
+                                                                                visible:
+                                                                                    false,
 
-                                                                        index: 0,
-                                                                    })
-                                                                }
-                                                                togglePaidByTenant={() =>
-                                                                    togglePaidByTenant(
-                                                                        popupMe.index,
-                                                                        false
-                                                                    )
-                                                                }
-                                                                currValue={
-                                                                    invoice.paidByMe
-                                                                }
-                                                            ></Popup>
-                                                        )}
-                                                </>
-                                            }
-                                        />
-                                    </div>
-                                ))
+                                                                                index: 0,
+                                                                            }
+                                                                        )
+                                                                    }
+                                                                    togglePaidByTenant={() =>
+                                                                        togglePaidByTenant(
+                                                                            popupMe.index,
+                                                                            false
+                                                                        )
+                                                                    }
+                                                                    currValue={
+                                                                        invoice.paidByMe
+                                                                    }
+                                                                ></Popup>
+                                                            )}
+                                                    </>
+                                                }
+                                            />
+                                        </div>
+                                    ))
                             ) : (
                                 <div className="text-center text-2xl">
                                     {t("not_invoice")}
