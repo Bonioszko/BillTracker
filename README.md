@@ -8,9 +8,9 @@ Tool for landlors to help them keep track of invoices from various tenants
 
 ## Tech Stack
 
-**Client:** React, TailwindCSS, Typescript
+**Client:** React(Typescript), TailwindCSS
 
-**Server:** Express, Typescript
+**Server:** Express(Typescript)
 
 **Database:** MongoDB
 
