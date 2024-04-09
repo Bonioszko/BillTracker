@@ -28,3 +28,31 @@
   body {
     font-family: 'Poppins', sans-serif;
   }
+  @layer base {
+    /* width */
+
+    @layer base {
+      /* width */
+      ::-webkit-scrollbar {
+        @apply w-2;
+        @apply h-1;
+      }
+
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        @apply bg-inherit
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        @apply bg-secondary-color rounded-xl
+      }
+      .white-scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-white;
+    }
+      .white-scrollbar::-webkit-scrollbar {
+        @apply w-0.5;
+    }
+    }
+  }

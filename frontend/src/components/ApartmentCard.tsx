@@ -16,8 +16,8 @@ const ApartmentCard: React.FC<ApartmentCardProps> = ({
             <div className="font-bold text-lg text-wrap text-center text-text-color">
                 {name}
             </div>
-            <div>{description}</div>
-            <div>
+            <div className="text-center">{description}</div>
+            <div className="text-center">
                 {" "}
                 {t("tenant")} : {tenant}
             </div>

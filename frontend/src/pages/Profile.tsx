@@ -105,7 +105,7 @@ function Profile() {
                                     </span>
                                     <span
                                         className={`${
-                                            summary.difference > 0
+                                            summary.difference >= 0
                                                 ? "bg-green-500"
                                                 : "bg-red-500"
                                         } px-1 rounded-lg`}
