@@ -88,7 +88,8 @@ function LandingPage() {
                             </li>
                             <li className="flex r items-center gap-3">
                                 <img src={exclamation} width="30" alt="" />
-                                You will not need to worry about it ever again
+                                We will take care of everything, just type in
+                                subject and body of the email
                             </li>
                         </ul>
                     </div>
@@ -98,16 +99,16 @@ function LandingPage() {
                     <div className="flex flex-col sm:flex-row gap-2 justify-center items-center">
                         {" "}
                         <div>Other applications created by me:</div>
-                        <div className="flex flex-col sm:flex-row  gap-6">
+                        <div className="flex flex-col sm:flex-row  gap-6 justify-center items-center">
                             <a
                                 href="https://bonioszko.github.io/Portfolio/"
-                                className="p-2 pb-0 border-b-2 border-black"
+                                className=" border-b-2 border-black"
                             >
                                 Portfolio
                             </a>
                             <a
                                 href="trainingappfull.onrender.com"
-                                className="p-2 pb-0 border-b-2 border-black "
+                                className=" border-b-2 border-black "
                             >
                                 TrainingApp
                             </a>
