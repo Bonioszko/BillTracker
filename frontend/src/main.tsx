@@ -12,6 +12,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./i18n/config.ts";
 import UserContextProvider from "./context/UserContext.tsx";
+import ResetPage from "./pages/ResetPage.tsx";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
     {
         path: "profile",
         element: <Profile></Profile>,
+    },
+    {
+        path: "reset/:token",
+        element: <ResetPage></ResetPage>,
     },
 ]);
 // ss

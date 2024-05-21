@@ -40,6 +40,27 @@ function Login() {
         setErrors(newErrors);
         return isValid;
     };
+    const handleResetPassword = async () => {
+        const { email } = formData;
+        if (email) {
+            const response = await fetch("/api/auth/forget", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                credentials: "include",
+                body: JSON.stringify({ email }),
+            });
+            const responseData = await response.json();
+            if (responseData.error) {
+                toast.error(responseData.error);
+            } else {
+                toast.success("Check your email for instructions");
+            }
+        } else {
+            toast.error("Provide valid email");
+        }
+    };
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (validateForm()) {
@@ -134,13 +155,23 @@ function Login() {
                                     className="p-2 rounded-xl border-2 border-black focus:outline-none focus:border-secondary-color"
                                 />
                             </div>
-                            <button
-                                type="submit"
-                                className="bg-background-color p-2 rounded-lg border-2 border-text-color hover:bg-secondary-color hover:text-text-color transition-colors duration-300 ease-in-out"
-                            >
+                            <div className="w-full flex justify-between gap-7">
                                 {" "}
-                                {t("submit")}
-                            </button>
+                                <button
+                                    type="submit"
+                                    className=" w-full bg-background-color p-2 rounded-lg border-2 border-text-color hover:bg-secondary-color hover:text-text-color transition-colors duration-300 ease-in-out"
+                                >
+                                    {" "}
+                                    {t("submit")}
+                                </button>
+                                <button
+                                    type="button"
+                                    className=" w-full bg-background-color p-2 rounded-lg border-2 border-text-color hover:bg-secondary-color hover:text-text-color transition-colors duration-300 ease-in-out"
+                                    onClick={handleResetPassword}
+                                >
+                                    Reset Password
+                                </button>
+                            </div>
                         </form>
                     </>
                 ) : (
