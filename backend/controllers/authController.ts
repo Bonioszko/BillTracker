@@ -3,7 +3,11 @@ import asyncHandler from "express-async-handler";
 import bcrypt from "bcryptjs";
 import User from "../models/user";
 import jwt from "jsonwebtoken";
-
+import dotenv from "dotenv";
+import { SentMessageInfo } from "nodemailer";
+const crypto = require("crypto");
+const nodemailer = require("nodemailer");
+dotenv.config();
 interface UserPayload {
     id: string;
 }
@@ -102,8 +106,6 @@ const getProfile = async (req: Request, res: Response) => {
             const userReturn = await User.findOne({ _id: user.id });
 
             return res.json(userReturn);
-
-            return res.json({ mess: "ello" });
         } catch (err) {
             if (err instanceof jwt.TokenExpiredError) {
                 // The token has expired
@@ -125,10 +127,89 @@ const logout = async (req: Request, res: Response) => {
     res.clearCookie("token");
     res.json({ logout: true });
 };
+const forget = async (req: Request, res: Response) => {
+    try {
+        const { email } = req.body;
+        const user = await User.findOne({ email });
+        console.log(user);
+        if (!user) {
+            return res.status(400).json({
+                error: "This email does not correspond to any account",
+            });
+        } else {
+            const token = crypto.randomBytes(20).toString("hex");
+
+            try {
+                await User.updateMany({ email }, { $set: { token: token } });
+                console.log("Token updated successfully");
+            } catch (error) {
+                console.error(`Failed to update token: ${error}`);
+            }
+
+            const transporter = nodemailer.createTransport({
+                port: 465, // true for 465, false for other ports
+                host: "smtp.gmail.com",
+                auth: {
+                    user: process.env.EMAIL,
+                    pass: process.env.PASSWORD,
+                },
+                secure: true,
+            });
+            const mailData = {
+                from: process.env.EMAIL,
+                to: email,
+                subject: "reset password",
+                text: "reset password",
+                html: `<a href='http://localhost:5173/reset/${token}'>Reset Password</a>`,
+            };
+            transporter.sendMail(
+                mailData,
+                (err: Error | null, info: SentMessageInfo) => {
+                    if (err) {
+                        console.error(
+                            `Error occurred when sending email: ${err.message}`
+                        );
+                        res.status(500).json({ error: "Failed to send email" });
+                    } else {
+                        console.log(`Email sent: ${info.response}`);
+                        res.status(200).json({
+                            message: "Email successfully sent",
+                        });
+                        return;
+                    }
+                }
+            );
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
+const checkToken = async (req: Request, res: Response) => {};
+const reset = async (req: Request, res: Response) => {
+    try {
+        const { token } = req.params;
+        console.log(token);
+        const user = await User.findOne({ email: "bartek.pers@gmail.com" });
+        console.log(user);
+        if (!user) {
+            return res.status(400).json({
+                error: "Not a valid tokent",
+            });
+        } else {
+            return res.status(200).json({
+                message: "ok",
+            });
+        }
+    } catch (err) {
+        console.log(err);
+    }
+};
 module.exports = {
     test,
     signInUser,
     loginUser,
     logout,
     getProfile,
+    forget,
+    reset,
 };
