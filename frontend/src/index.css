@@ -14,45 +14,44 @@
     --test-color:#6C8EFF
 } */
 
-:root{
-  --background-color: #FDFDFD;
-  --primary-color: #A9E19B;
-  --secondary-color: #67AECD;
-  --third-color:  #EA7070;
+:root {
+  --background-color: #fdfdfd;
+  --primary-color: #a9e19b;
+  --secondary-color: #67aecd;
+  --third-color: #ea7070;
 
   --fourth-color: #de3bff;
-  --text-color:#F2F2F2;
-  --test-color:#6C8EFF
+  --text-color: #f2f2f2;
+  --test-color: #6c8eff;
 }
 
-  body {
-    font-family: 'Poppins', sans-serif;
-  }
+body {
+  font-family: 'Poppins', sans-serif;
+}
+@layer base {
+  /* width */
+
   @layer base {
     /* width */
-
-    @layer base {
-      /* width */
-      ::-webkit-scrollbar {
-        @apply w-2;
-        @apply h-1;
-      }
-
-
-      /* Track */
-      ::-webkit-scrollbar-track {
-        @apply bg-inherit
-      }
-
-      /* Handle */
-      ::-webkit-scrollbar-thumb {
-        @apply bg-secondary-color rounded-xl
-      }
-      .white-scrollbar::-webkit-scrollbar-thumb {
-        @apply bg-white;
+    ::-webkit-scrollbar {
+      @apply w-2;
+      @apply h-1;
     }
-      .white-scrollbar::-webkit-scrollbar {
-        @apply w-0.5;
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+      @apply bg-inherit;
     }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+      @apply bg-secondary-color rounded-xl;
+    }
+    .white-scrollbar::-webkit-scrollbar-thumb {
+      @apply bg-white;
+    }
+    .white-scrollbar::-webkit-scrollbar {
+      @apply w-0.5;
     }
   }
+}

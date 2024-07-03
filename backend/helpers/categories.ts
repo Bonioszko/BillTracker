@@ -1,1 +1,1 @@
-export default ["Rent", "Cooperative", "Electricity", "Water"];
+export default ['Rent', 'Cooperative', 'Electricity', 'Water']

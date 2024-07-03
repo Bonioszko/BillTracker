@@ -1,27 +1,21 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next'
 interface ApartmentCardProps {
-    name: string;
-    description: string;
-    tenant: string;
+  name: string
+  description: string
+  tenant: string
 }
-const ApartmentCard: React.FC<ApartmentCardProps> = ({
-    name,
-    description,
-    tenant,
-}) => {
-    const { t } = useTranslation();
-    return (
-        <div className="flex flex-col items-center gap-3 h-40 rounded-xl bg-secondary-color  p-2 sm:p-5">
-            {" "}
-            <div className="font-bold text-lg text-wrap text-center text-text-color">
-                {name}
-            </div>
-            <div className="text-center">{description}</div>
-            <div className="text-center">
-                {" "}
-                {t("tenant")} : {tenant}
-            </div>
-        </div>
-    );
-};
-export default ApartmentCard;
+const ApartmentCard: React.FC<ApartmentCardProps> = ({ name, description, tenant }) => {
+  const { t } = useTranslation()
+  return (
+    <div className='bg-secondary-color flex h-40 flex-col items-center gap-3 rounded-xl p-2 sm:p-5'>
+      {' '}
+      <div className='text-text-color text-wrap text-center text-lg font-bold'>{name}</div>
+      <div className='text-center'>{description}</div>
+      <div className='text-center'>
+        {' '}
+        {t('tenant')} : {tenant}
+      </div>
+    </div>
+  )
+}
+export default ApartmentCard
