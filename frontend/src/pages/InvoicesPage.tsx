@@ -4,29 +4,7 @@ import AddApartmentPopoup from '../components/AddApartmentPopup'
 import { UserContextType, UserContext } from '../context/UserContext'
 import PlusIcon from '../../public/plus.svg'
 import Layout from '../components/Layouts/Layout'
-
-export const Categories = ['Rent', 'Water', 'Electricity', 'Cooperative']
-
-export type Category = (typeof Categories)[number]
-
-export type Invoice = {
-  category: Category
-  apartment: string
-  amount: number
-  name: string
-  date: Date
-  paidByMe: boolean
-  paidByTenant: boolean
-  _id: string
-}
-export type Apartment = {
-  name: string
-  _id: string
-  owner: string
-  description: string
-  tenant: string
-  invoices: Invoice[]
-}
+import { Invoice, Apartment } from '../ts/interfaces_types'
 
 function InvoicesPage() {
   const { user } = useContext(UserContext) as UserContextType

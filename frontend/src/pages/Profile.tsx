@@ -3,7 +3,7 @@ import { UserContext, UserContextType } from '../context/UserContext.js'
 import { useContext, useEffect, useState } from 'react'
 
 import Layout from '../components/Layouts/Layout.js'
-import { Apartment } from './InvoicesPage.js'
+import { Apartment } from '../ts/interfaces_types.js'
 import { useTranslation } from 'react-i18next'
 import ApartmentCard from '../components/ApartmentCard.js'
 
@@ -98,12 +98,7 @@ function Profile() {
           <h1 className='text-center text-2xl font-bold'>Your apartments:</h1>
           <div className='grid-cols-apartments-grid grid w-full gap-5 p-10'>
             {apartments?.map((apartment, index) => (
-              <ApartmentCard
-                key={index}
-                name={apartment.name}
-                description={apartment.description}
-                tenant={apartment.tenant}
-              ></ApartmentCard>
+              <ApartmentCard key={index} apartment={apartment}></ApartmentCard>
             ))}
           </div>
         </div>

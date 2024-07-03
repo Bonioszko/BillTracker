@@ -1,12 +1,7 @@
 import { createContext, useState, ReactNode, useEffect } from 'react'
-
+import { User } from '../ts/interfaces_types'
 interface UserContextProviderProps {
   children: ReactNode
-}
-export interface User {
-  name: string
-  email: string
-  _id: string
 }
 
 export type UserContextType = {

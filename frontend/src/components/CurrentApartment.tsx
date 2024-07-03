@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Invoice, Apartment, Categories } from '../pages/InvoicesPage'
+import { Invoice, Apartment, Categories } from '../ts/interfaces_types'
 import Cell from './Cell'
 import TitleInvoices from './TitleInvoices'
 import water from '../../public/water.svg'

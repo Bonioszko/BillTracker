@@ -109,6 +109,19 @@ type Summary = {
   totalAmountToReceive: number
   difference: number
 }
+const getInvoicesCount = asyncHandler(async (req: Request, res: Response) => {
+  const { id } = req.params
+
+  const apartment = await Apartment.findOne({ _id: id })
+  if (!apartment) {
+    res.status(400).send({ message: 'There is no such apartment' })
+    return
+  }
+  const result = await Invoice.find({ apartment: id }).countDocuments()
+
+  res.status(200).send({ invoices_count: result })
+  return
+})
 const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
   const { id } = req.params
   const user = await User.findOne({ _id: id })
@@ -161,6 +174,7 @@ const getInvoiceSummary = asyncHandler(async (req: Request, res: Response) => {
   res.status(200).json({
     summary: summary,
   })
+  return
 })
 module.exports = {
   getAllUserInvoices,
@@ -168,4 +182,5 @@ module.exports = {
   changePaymentInvoice,
   deleteInvoice,
   getInvoiceSummary,
+  getInvoicesCount,
 }
